@@ -1,0 +1,47 @@
+<div class="col-md-12">                                                
+                                        <h5 class="fs-title">Payment</h5> 
+                                        <h5 class="title">Total 
+                                           {% if statement.daysTillBookedDate is defined %} <small class="pull-right">{{statement.daysTillBookedDate}}  day(s) to booking </small> {% endif %}</h5>                                             
+                                            {% if statement.daysBooked is defined %}  Day(s) <span class="pull-right"><b>{{statement.daysBooked}}</b></span><br> {% endif %}
+                                            {% if statement.car.rate is defined %}  Rate/day <span class="pull-right"><b>{{site.currency}} {{statement.car.rate}}</b></span><br>   {% endif %}
+                                            {% if statement.car.deposit is defined%}   Refundable deposit <span class="pull-right"><b>{{site.currency}} {{statement.car.deposit}}</b></span><br>    {% endif %}
+                                            {% if statement.additionItems is defined%} 
+                                                {% if statement.additionItems|length >0 %}
+                                                    <br><b class="text-primary">Additionals</b><br>
+                                                    {% for item in statement.additionItems %}
+                                                        <span>{{item.description}}  <span class="pull-right"><b>{{site.currency}} {{item.amount}}</b> </span> </span><br>
+                                                    {% endfor %}
+                                                {% endif %}
+                                           {% endif %}
+
+                                           {% if statement.discount is defined%} 
+                                           {% if statement.discount|length >0 %}
+                                              <br> <b class="text-primary">Discounts Applied</b><br>
+                                               {% for item in statement.discount %}
+                                                   <span>{{item.name}} <small>- {{item.display}}%</small> <span class="pull-right"><b>{{site.currency}} {{item.total}}</b> </span><br></span>
+                                               {% endfor %}
+                                           {% endif %}
+                                      {% endif %}
+                                          
+                                    {% if statement.totalBookingFee is defined%} <hr><h5 class="title">Total Due <span class="pull-right"><b>{{site.currency}} {{statement.totalBookingFee}}</b></span></h5> <hr>  {% endif %}
+                                        
+                                        {% if statement.levy is defined%} 
+                                                {% if statement.levy|length >0 %}
+                                                    <b class="text-primary">Levies Applied</b><br>
+                                                    {% for item in statement.levy %}
+                                                        <span>{{item.name}} <small>{{item.amount}}%</small> <span class="pull-right"><b>{{site.currency}} {{item.total}}</b> </span><br></span>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endif %}
+                                        <br>
+                                        <label for="cars"><b>Payment type</b></label>
+                                        <select name="payment-type" id="payment-type" class="form-control">
+                                        {% for key,type in paymentTypes %}
+                                            <option value="{{key}}">{{type}}</option>
+                                        {% endfor %}
+                                        </select> 
+                                        <p>
+                                        I agree to the <a href="">terms and condition</a> <input type="checkbox" id="agree" class="pull-right" name="agree">
+                                        </p>
+                                        </div>
+                                    </div>

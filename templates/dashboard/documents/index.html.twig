@@ -1,0 +1,116 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block form %}
+<div class="title-header" style="">
+{% if documents|length <2 %}
+<div class="alert alert-info">
+<b>Required Documents : 
+<ul>
+    <li>ID/Passport</li>
+    <li>Driver's License</li>
+    <li>Proof of Address</li>
+</ul>
+</b>
+</div>
+{% endif %}
+ <div><b>Upload required documents here ({{documents|length}})   
+        <a href="#"  class="pull-right"  data-toggle="modal" data-target="#UploadDocument"> Upload <span class="fa fa-upload"></span></a>
+       </b> </div>
+        
+        <div class="documents-list">
+        {% if documents is defined %}
+        <ul>
+            {% for document in documents %}
+            <li>
+                <div class ="col-md-12 document-item" >
+                    
+        <div class="row">
+        <div class="col-md-4">
+                        
+                    <h4><span class="name"><a href="#" class="option" title="Click to delete document" data-toggle="modal" data-target="#{{document.file}}">
+                    <span class="fa fa-file-pdf fa-2x"></span> {{document.type}}</a></span>
+                </h4>                        
+                    </div>
+                        <div class="col-md-8">
+                        <span class="options pull-right">
+                           <a href="{{document.file}}" target="_blank" title="Click to download document" class="btn btn-sm btn-success" > <span class="fa fa-download"></span> Download</a>
+                        
+                    {% if document.approved %}
+                    <span class="text-success fa  fa-check-circle" title="Document approved"></span>
+                   {% endif %}
+                   </span>
+
+                </div>
+            <div class="modal fade" id="{{document.file}}" tabindex="-1" role="dialog" aria-labelledby="UploadDocumentLabel" aria-hidden="true">
+                <div class="modal-dialog  modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="UploadDocumentLabel"><b>Delete document</b></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                            <div class="modal-body">      	
+                                    <form  method="POST" action='{{path('deleteDocument')}}' enctype="multipart/form-data" >
+                                    <h4><span class="name">
+                                    <span class="fa fa-file-pdf fa-2x"></span> {{document.type}}</span>
+                                <button type="submit"  class="btn btn-small btn-primary pull-right"><i class="fa fa-trash"></i> Delete</button> 
+                                </h4> 
+                                        <input type="hidden" name="id" value="{{document.id}}"> 
+                                            
+                                    </form> 
+                            </div>
+                
+                    </div>
+                </div>
+            </div>
+            </div>
+   </div>
+        </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if permissions.inprogressRental %}
+            {% if documents|length >2 %}
+            <div class="mobile-menu-item continue-booking">
+                <a href="/dashboard/discard/rental" class="col-md-12 btn btn-lg btn-primary"> Continue to booking </a>
+            </div>
+            {% endif %}
+        {% endif %}    
+
+</div>
+    <br>
+
+
+    <br>
+    <div class="modal fade" id="UploadDocument" tabindex="-1" role="dialog" aria-labelledby="UploadDocumentLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="UploadDocumentLabel"><b>Upload document</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">      	
+                            <div class="upload-list-document">
+                                <form  method="POST" action='{{path('uploadDocument')}}' enctype="multipart/form-data" >
+                                <select name="type" class="form-control" title="document type" >
+                                    <option value="" >Select type</option>
+                                        {% for id,name in types %} 
+                                            <option value="{{id}}">{{name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                        <input type="file" name="file" id="listfile" class="filestyle"> 
+                                        <button type="submit"  class="btn btn-primary pull-right"><i class="fa fa-save"></i> Upload Document</button> 
+                                </form>                                                 
+                            </div>
+            </div>
+            
+            </div>
+        </div>
+</div>
+
+
+{% endblock %}

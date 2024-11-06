@@ -1,0 +1,11 @@
+{% extends 'email/base.html.twig' %}
+
+{% block body %}  
+    Hi {{user.fullname}}<br><br>
+    {% if message is defined %}
+    <p>{{message}}</p>  
+    {% endif %}
+{% endblock body %}                                             
+
+
+													

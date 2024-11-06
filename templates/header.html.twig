@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>{{site.name}} | {% if(title is defined)%}{{title}}{% else %} Welcome{% endif %} </title>
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('home') }}
+        {% endblock %}   
+		<meta name="description" content="The Car rental process is simple and we deliver your car right to your hotel, the airport or jet">
+		<meta name="keywords" content="{{site.name}}">
+		<meta name="author" content="{{site.name}}">   
+		<link rel="shortcut icon" type="image/jpg" href="{{ asset('/images/favicon.ico')}}"/>   
+	  <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('/images/favicon.ico')}}">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css?family=Poppins%7CQuicksand:400,500,700" rel="stylesheet">
+		<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"  />	
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />	 
+		<link href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
+		
+	
+	</head>
+<body>        
+	<div id="page-container" class="">
+		<div id="header" class="header">
+			<div class="container">
+				<div class="header-container">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<div class="header-logo text-center">
+						<a href="/home">
+							<span class="brand-text">
+								<span class="text-danger"><b>{{site.name}}</b></small>
+							</span>
+						</a>
+					</div>
+					<div class="header-nav">
+						<div class=" collapse navbar-collapse" id="navbar-collapse">
+							<ul class="nav">
+								<li><a href="/home">Home</a></li>
+								<li><a href="/faqs">FAQs</a></li>
+								<li><a href="/contact">Contact Us</a></li>
+								<li><a href="/terms">Terms &amp; Conditions</a></li>
+                <li><a href="/disclaimer">Disclaimer </a></li>
+                <li><a href="/privacy"> Privacy Policy</a></li>             
+							</ul>
+							
+						</div>
+					</div>
+					<div class="header-nav user-section">
+						<ul class="nav">	
+						{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <li>
+            <a href="/dashboard/notifications">
+                  <i class="fa fa-fw fa-bell fa-2x text-primary"></i>
+                  {% if permissions.newNotificationCount > 0 %}
+                        <span class="badge badge-success pull-right">{{permissions.newNotificationCount}}</span>                  
+                      {% endif %}
+            </a>
+          </li>
+							<li class="dropdown dropdown-hover">
+									<a href="#" data-toggle="dropdown">
+								        <i class="fa fa-fw fa-user-circle-o fa-2x text-info"></i>
+                      <span class="account-name">My Account</span>
+										<b class="caret"></b>
+										<span class="arrow top"></span>
+									</a>
+
+									<div class="dropdown-menu">
+                  {% if permissions is defined %}
+                    {% if permissions.rentee %}    
+                      <a class="dropdown-item"  href="/dashboard"><i class="fa fa-fw fa-list text-warning"></i> <b>Dashboard</b></a>
+                      <a class="dropdown-item"  href="/dashboard/cars"><i class="fa fa-fw fa-car text-warning"></i> <b>Cars</b></a>           
+                      <a class="dropdown-item"  href="/dashboard/additionals"><i class="fa fa-fw fa-plus text-warning"></i> <b>Additionals</b></a>       
+                      <a class="dropdown-item"  href="/dashboard/restrictions"><i class="fa fa-fw fa-warning"></i><b> Restrictions</b></a>                 
+                      <a class="dropdown-item"  href="/dashboard/profile/accounts"><i class="fa fa-fw fa-bank text-info"></i><b> Bank Accounts</b></a>  
+                      <a class="dropdown-item"  href="/dashboard/profile/payfast"><i class="fa fa-fw fa-bank text-info"></i> <b>Payfast</b></a>
+                      <a class="dropdown-item"  href="/dashboard/profile/paypal"><i class="fa fa-fw fa-bank text-info"></i> <b>PayPal</b></a>
+                      <a class="dropdown-item" href="/dashboard/profile/levies"><i class="fa fa-fw fa-bank text-info"></i> <b>Levy</b></a>
+                      <a class="dropdown-item" href="/dashboard/profile/promotions"><i class="fa fa-fw fa-bank text-info"></i> <b>Promotion</b></a>
+                      {% endif %}
+                  {% endif %} 
+											<a class="dropdown-item" href="/home">
+											<i class="fa fa-fw fa-dashboard text-info"></i> <b>Rent now</b>
+											</a> 
+											<a class="dropdown-item" href="/dashboard/rentals">
+												<i class="fa fa-fw fa-car text-info"></i> <b>Rentals</b>
+											</a>
+											<a class="dropdown-item" href="/dashboard/documents">
+											<i class="fa fa-fw fa-file-pdf text-info"></i> <b>Documents</b>
+											</a>
+											<a class="dropdown-item" href="/dashboard/profile">
+											<i class="fa fa-fw fa-user-circle-o text-info"></i> <b>Profile</b>
+											</a>
+											<a class="dropdown-item" href="/dashboard/setting">
+											<i class="fa fa-fw fa-cogs text-info"></i> <b>Settings</b>
+											</a>
+											<a class="dropdown-item" href="/logout">
+											<i class="fa fa-fw fa-sign-out text-info"></i> <b>Log out</b>
+											</a>
+											<a class="dropdown-item text-danger" href="/dashboard/close">
+											<i class="fa fa-trash text-info"></i><b> Delete Account</b>
+											</a>
+									</div>
+								</li>
+								
+						{% else %}
+							<li>
+								<a href="/login">
+              <i class="fa fa-fw fa-user-circle-o fa-2x text-info"></i>
+									<span  class="d-none d-xl-inline">Log in</span>	
+								</a>                                    
+							</li> 
+						{% endif %}						
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+         {% for message in app.flashes('notice') %}
+         <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ message }}
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+         {% endfor %}
+		{% for message in app.flashes('notice-success') %}
+         <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message|raw }}
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+         {% endfor %}
+         {% for message in app.flashes('notice-danger') %}
+         <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ message|raw }}
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+         {% endfor %}
+      
+ <style>
+  .filter-section {
+  background: #f2f3f4;
+  padding: 10px;
+  border-radius: 5px;
+}
+  .mobile-menu-item {
+    display:none;
+  }
+  
+  .otp-panel {
+    margin-left:10%;
+    margin-right:10%;
+  }
+  .digit-group 	input {
+		width: 50px;
+    height: 50px;
+    border: none;
+    line-height: 50px;
+    text-align: center;
+    font-size: 24px;
+    font-family:'Quicksand', sans-serif;
+    font-weight: 200;
+    margin: 0 2px;
+    background: #dcdfdc;
+    padding: 10px;
+    border-radius: 10px;
+	}
+
+  .digit-group .splitter {
+		padding: 0 5px;
+		color: white;
+		font-size: 24px;
+	}
+
+.prompt {
+	margin-bottom: 20px;
+	font-size: 20px;
+	color: white;
+}
+
+.rental-item {
+   border-bottom:1px #b0b0b0 solid;
+   padding:10px;
+}
+.rentals li:hover {
+  background-color : #f7f9fa;
+}
+
+.rental-item .amount {
+   font-size:24px;
+   padding:10px;
+}
+
+#grad1 {
+	/* background : url('images/table-mountain.jpg');
+	background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; */
+}
+
+
+.loading {
+  display:none;
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+/* Transparent Overlay */
+.loading:before {
+  content: '';
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+    background: radial-gradient(rgba(20, 20, 20,.8), rgba(0, 0, 0, .8));
+
+  background: -webkit-radial-gradient(rgba(20, 20, 20,.8), rgba(0, 0, 0,.8));
+}
+
+/* :not(:required) hides these rules from IE9 and below */
+.loading:not(:required) {
+  /* hide "loading..." text */
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+
+.loading:not(:required):after {
+  content: '';
+  display: block;
+  font-size: 10px;
+  width: 1em;
+  height: 1em;
+  margin-top: -0.5em;
+  -webkit-animation: spinner 150ms infinite linear;
+  -moz-animation: spinner 150ms infinite linear;
+  -ms-animation: spinner 150ms infinite linear;
+  -o-animation: spinner 150ms infinite linear;
+  animation: spinner 150ms infinite linear;
+  border-radius: 0.5em;
+  -webkit-box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0, rgba(255,255,255, 0.75) 1.1em 1.1em 0 0, rgba(255,255,255, 0.75) 0 1.5em 0 0, rgba(255,255,255, 0.75) -1.1em 1.1em 0 0, rgba(255,255,255, 0.75) -1.5em 0 0 0, rgba(255,255,255, 0.75) -1.1em -1.1em 0 0, rgba(255,255,255, 0.75) 0 -1.5em 0 0, rgba(255,255,255, 0.75) 1.1em -1.1em 0 0;
+box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0, rgba(255,255,255, 0.75) 1.1em 1.1em 0 0, rgba(255,255,255, 0.75) 0 1.5em 0 0, rgba(255,255,255, 0.75) -1.1em 1.1em 0 0, rgba(255,255,255, 0.75) -1.5em 0 0 0, rgba(255,255,255, 0.75) -1.1em -1.1em 0 0, rgba(255,255,255, 0.75) 0 -1.5em 0 0, rgba(255,255,255, 0.75) 1.1em -1.1em 0 0;
+}
+
+/* Animation */
+
+@-webkit-keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-moz-keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.form-control:disabled, .form-control[readonly] {
+  background-color: #fff;
+  opacity: 0.5;
+}
+.account-setup-section{
+    margin-top : 10%;
+    margin-left : 35%;
+    margin-bottom : 5%;
+	min-height:500px;
+}	
+	.login-form {
+
+border: #fff solid 1px;
+border-radius:10px;
+padding:15px;
+background:#fff;
+}
+.login-section{
+margin-top : 10%;
+margin-left : 40%;
+margin-bottom : 10%;
+}
+
+@media only screen and (max-width: 768px) {
+.account-name{
+  display:none
+}
+.brand-text {
+  padding-left:35%
+}
+
+.mt-3, .my-3 {
+  margin-top: 0rem !important;
+}
+.mb-2, .my-2 {
+  margin-bottom: .0rem !important;
+}
+  #contact {
+    padding:10px;
+  }
+
+  .widget {
+  background: #fff none repeat scroll 0 0;
+  display: inline-block;
+  margin-bottom: 27px;
+  padding: 5px;
+  position: relative;
+  width: 100%;
+}
+  .car-body{
+    padding-top:10px;
+  }
+  .footer-copyright,.whyus
+  {
+    display:none;
+  }
+.header {
+  background: #f2f3f4;
+  -webkit-box-shadow: 0 0 0px rgba(0,0,0,.15);
+  box-shadow: 0 0 0px rgba(0,0,0,.15);
+  padding: 0;
+  position: relative;
+  z-index: 1030;
+}
+
+.header .navbar-toggle {
+  border-right: 0px solid #dee2e6;
+}
+
+.widget-header {
+  background: #fff;
+  margin: 0;
+  padding: 0px;
+}
+
+    #footer-copyright {    
+        margin-bottom : 0%;
+      }
+      
+      .login-section{
+    margin-top : 20%;
+    margin-left : 0%;
+    margin-bottom : 40%;
+    }
+
+    .header .header-nav .nav.pull-right {
+      margin-right: 0px;
+    }
+
+
+    .account-setup-section {
+      margin-left: 0%;
+    }
+    .account-sidebar ,#progressbar li a ,.user-section{
+      display:none;
+    }
+    #progressbar {
+  margin-top: 0px;
+}
+    .account-container .account-body {
+      border:0px #000 solid;
+      border-radius 0px;
+      padding:0px;
+      height:100%;
+    }
+    .account-body {
+      padding:0px;
+    }
+
+    .row {
+      padding:2px;
+    }
+    .mobile-menu-item ,.user-section{
+      display:block;
+     }
+     .options .amount {
+      font-size :40px;
+     }
+
+
+
+     .continue-booking {
+      margin-bottom:10px;
+     }
+ }
+
+
+	h4 .submenu {
+   color:white;
+}
+.section-container ,.account-container,.account-sidebar{
+   background : #fff;
+}
+.account-container{
+margin-top:0px;
+}          
+.list-group .list-group-item {
+  border-left: 1px solid #b0b0b0!important;
+  border-right: 1px solid #b0b0b0;
+  background-color: #fff;
+  color: #3c3434;
+  margin-top:0px;
+  font-weight:500;
+}
+
+.list-group .list-group-item .fa{
+  font-size:20px;
+  color:#b0b0b0;
+}
+
+.account-container .account-sidebar {  
+  padding: 0px 1.875rem 0px 0px;
+  overflow: hidden;  
+  border-radius: 10px 10px 10px 10px;
+   min-height: 500px
+}
+
+.account-body {
+   border: 1px solid #b0b0b0;
+   border-radius:10px 10px 0px 0px;
+   min-height: 500px
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #ff5b57;
+  border-color: #ff5b57;
+  -webkit-box-shadow: 0;
+  box-shadow: 0;
+  padding:5px;
+}
+ .breadcrumb .breadcrumb-item a {
+  color: #2d353c;
+  font-weight: 600;
+}
+
+.breadcrumb-item.active {
+  color: #ff5b57;
+  font-weight: 600;
+}
+.form-title{
+   font-size:30px;
+   font-weight: 600;
+   padding-bottom:25px;
+}
+
+.whyus {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.statement .title {
+margin: 10px 0px 10px 0px;
+font-size: 20px;
+font-weight: 650;
+}
+.statement .body {
+background: #f2f2f2;
+padding: 10px;
+border-radius: 5px;
+margin-bottom: 10px;
+}
+
+.location,.cars,.documents,.invoice,.payments {
+display:none;
+}
+
+.vehicle {
+padding:10px;
+border-bottom:1px #b0b0b0 solid;
+}
+/* #vehicles li:hover {
+background-color : #f7f9fa;
+} */
+.vehicle .rate {
+font-size:14px;
+font-weight:600;
+padding:0px;
+color : #222020;
+}
+
+
+.vehicle .image {
+border-radius:10px;
+height:100%;
+width:100%;
+}
+.vehicle .name {
+font-size: 14px;
+}
+.vehicle .description {
+font-size: 12px;
+padding-top:10px;
+} 
+.vehicle .option {
+padding: 5px;
+font-size: 14px;
+font-weight: 600;
+background: #dde8e8;
+margin: 3px;
+border-radius: 5px;
+
+}
+
+.document-item {
+border-bottom:1px #b0b0b0 solid;
+padding:10px;
+}
+.documents-list li:hover ,#vehicles li:hover  {
+background-color : #f7f9fa;
+cursor: pointer;;
+}
+#vehicles {
+	height:400px;
+	overflow:auto;
+	scrollbar-width: none ;
+}
+
+
+.documents-list {
+	margin-top:10px;
+}
+
+
+#msform fieldset .form-card {
+/* background: white;
+border: 0 none;
+border-radius: 0px;
+box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
+padding: 20px 40px 30px 40px;
+box-sizing: border-box;
+width: 94%; */
+margin: 0 3% 20px 3%;
+
+/*stacking fieldsets above each other*/
+//position: relative;
+} 
+
+#msform fieldset {
+background: white;
+border: 0 none;
+border-radius: 0.5rem;
+box-sizing: border-box;
+width: 100%;
+margin: 0;
+padding-bottom: 20px;
+
+/*stacking fieldsets above each other*/
+position: relative;
+}
+
+
+#msform fieldset .form-card {
+text-align: left;
+color: #9E9E9E;
+}
+
+
+/*Blue Buttons*/
+#msform .action-button {
+width: 100px;
+background: #217699;;
+font-weight: bold;
+color: white;
+border: 0 none;
+border-radius: 0px;
+cursor: pointer;
+padding: 10px 5px;
+margin: 10px 20px;
+border-radius: 5px;
+}
+
+#msform .action-button:hover, #msform .action-button:focus {
+box-shadow: 0 0 0 2px white, 0 0 0 3px skyblue;
+}
+
+/*Previous Buttons*/
+#msform .action-button-previous {
+width: 100px;
+background: #616161;
+font-weight: bold;
+color: white;
+border: 0 none;
+border-radius: 0px;
+cursor: pointer;
+padding: 10px 5px;
+margin: 10px 20px;
+border-radius: 5px;
+}
+
+#msform .action-button-previous:hover, #msform .action-button-previous:focus {
+box-shadow: 0 0 0 2px white, 0 0 0 3px #616161;
+}
+
+
+/*The background card*/
+.card {
+/* z-index: 0; */
+border: none;
+border-radius: 0.5rem;
+position: relative;
+}
+
+/*FieldSet headings*/
+.fs-title {
+font-size: 25px;
+color: #2C3E50;
+margin-bottom: 10px;
+font-weight: bold;
+text-align: left;
+font-family: 'Quicksand', sans-serif;
+}
+b, strong ,span ,p,a,.btn ,.statement .title {
+font-family: 'Quicksand', sans-serif;
+}
+
+/*progressbar*/
+#progressbar {
+margin-top: 30px;
+overflow: hidden;
+color: green;
+}
+
+#progressbar .active {
+color: #000000;
+}
+
+#progressbar li {
+list-style-type: none;
+font-size: 14px;
+width: 20%;
+float: left;
+position: relative;
+}
+
+/*Icons in the ProgressBar*/
+#progressbar #location:before {
+font-family: FontAwesome;
+content: "\f276";
+}
+
+#progressbar #cars:before {
+font-family: FontAwesome;
+content: "\f1ba";
+}
+
+#progressbar #documents:before {
+font-family: FontAwesome;
+content: "\f1c1";
+}
+
+#progressbar #invoice:before {
+font-family: FontAwesome;
+content: "\f09d";
+}
+
+#progressbar #payments:before {
+font-family: FontAwesome;
+content: "\f00c";
+}
+
+/*ProgressBar before any progress*/
+#progressbar li:before {
+width: 50px;
+height: 50px;
+line-height: 45px;
+display: block;
+font-size: 18px;
+color: #ffffff;
+background: lightgray;
+border-radius: 50%;
+margin: 0 auto 10px auto;
+padding: 2px;
+}
+
+/*ProgressBar connectors*/
+#progressbar li:after {
+content: '';
+width: 100%;
+height: 2px;
+background: lightgray;
+position: absolute;
+left: 0;
+top: 25px;
+z-index: -1;
+}
+
+/*Color number of the step and the connector before it*/
+#progressbar li.active:before, #progressbar li.active:after {
+background: #00acac;
+}
+
+body {
+  font-family: 'Quicksand', sans-serif;
+}
+.form-control{    
+-moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  padding: 10px 8px 4px 8px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  border-radius: 0px;
+  margin-bottom: 25px;
+  width: 100%;
+  box-sizing: border-box;
+  color: #2C3E50;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+input:focus, textarea:focus {
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border: none;
+  border-bottom: 1px solid skyblue;
+  outline-width: 0;
+}
+
+
+</style>  
+                      
+              
+            

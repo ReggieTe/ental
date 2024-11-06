@@ -1,0 +1,21 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block form %}
+{{ form_start(form) }}
+  <div class="row">
+      <div class="col-md-12">
+          {{ form_row(form.description) }}
+      </div>
+      <div class="col-md-12">
+          {{ form_row(form.fine) }}
+      </div>
+      <div class="col-md-12">
+          {{ form_row(form.state) }}
+      </div> 
+      
+      <div class="col-md-12">
+            <span class="pull-right"> {{ form_row(form.update) }}</span>
+      </div>
+  </div>
+{{ form_end(form) }}
+{% endblock %}

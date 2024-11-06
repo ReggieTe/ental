@@ -1,0 +1,13 @@
+{% extends 'email/base.html.twig' %}
+
+{% block body %}  
+    Hi {{user.fullname}}<br><br>
+        Rental Checklist has been approved 
+    <br><br></small>
+        {% if site.name is defined %}
+    <br><br><b>{{site.name}} Dream Team</b>  
+        {% endif %}
+{% endblock body %}                                             
+
+
+													

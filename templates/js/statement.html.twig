@@ -1,0 +1,228 @@
+<input name="id" id="id" type="hidden" value="">                                    
+        <h2 class="fs-title">Invoice</h2>
+            <div class="row">
+
+               {% if statement.user is defined %}
+                    <div class="col-md-12">                                                
+                        <h5 class="title">Details</h5>
+                            <div class="body">
+                                        {% if statement.user.fullname is defined %}{% if statement.user.fullname is not empty %} <strong>Fullname</strong> <span class="pull-right">{{statement.user.fullname}}</span><br>{% endif %}{% endif %}
+                                        {% if statement.user.email is defined %}{% if statement.user.email is not empty %}  <strong>Email</strong> <span class="pull-right">{{statement.user.email}}</span><br>{% endif %}{% endif %}
+                                        {% if statement.user.phone is defined %}{% if statement.user.phone is not empty %}  <strong>Phone</strong> <span class="pull-right">{{statement.user.phone}}</span><br>{% endif %}{% endif %}
+                                        {% if statement.user.address is defined %}{% if statement.user.address is not empty %}  <strong>Address</strong> <span class="pull-right">{{statement.user.address}}</span>{% endif %}{% endif %}
+                            </div>
+                    </div>                                      
+                {% endif %}
+                {% if statement.rental is defined %}
+                <div class="col-md-12">
+            <h5 class="title">Rental</h5> 
+                {% if statement.rental is defined%}
+            <table   style="font-family: 'Quicksand', sans-serif;width:100%;" >                                                    
+            {% if statement.rental.location is defined%}
+                <tr>
+                    <td>Pick up location</td><td align="right"><b>{{statement.rental.location}}</b></td>
+                </tr>
+            {% endif %}                                                    
+            {% if statement.rental.location is defined%}
+                <tr>
+                    <td>Drop off Location</td><td align="right"><b>{{statement.rental.location}}</b></td>
+                </tr>
+            {% endif %}                                                      
+                {% if statement.rental.pickupdate is defined%}
+                <tr>
+                    <td>Pick up date </td><td align="right"><b>{{statement.rental.pickupdate}}</b></td>
+                </tr> 
+            {% endif %}                                                    
+                {% if statement.rental.dropoffdate is defined%}
+                <tr>
+                    <td>Drop off date </td><td align="right"><b>{{statement.rental.dropoffdate}}</b></td>
+                </tr>
+            {% endif %} 
+            </table>
+        {% endif %} 
+        </div>                
+        {% endif %}                             
+                    {% if statement.documents is defined %}
+                        <div class="col-md-12">
+                            <h5 class="title">Documents</h5>                                                              
+                            <div class ="documents-list">                       
+                                <ul>
+                                {% for image in statement.documents %}
+                                    <li> 
+                                        <div class="row">
+                                                <div class ="col-md-12" >
+                                                    <div class ="document-item" > 
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <h5><strong><a href="{{image.file}}" target="_blank"class="option" title="Click to download document" >                                             <span class="fa fa-file-pdf fa-2x"></span> {{image.type}}</a></strong></h5>                        
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                    <span class="options pull-right">
+                                                                    <span class="text-success fa  fa-check-circle fa-3x" title="Document approved"></span>
+                                                            </div>
+                                                        </div>  
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                                </ul>
+                            </div> 
+                        </div>                                      
+                    {% endif %}
+            {% if statement.car is defined%}
+                <div class="col-md-12">
+                <h5 class="title">Vehicle</h5>                                                 
+                    <div class="vehicle" > 
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4">                                                    
+                                {% if statement.car.images|length != 0%}
+                                <img class="image img-rounded" style="width:100%" data-small="{{statement.car.images | first.file}}" 
+                                data-small-retina="{{statement.car.images | first.file}}" data-large="{{statement.car.images | first.file}}"
+                            data-large-retina="{{statement.car.images | first.file}}" src="{{statement.car.images | first.file}}" alt="{{statement.car.description}}">
+                                {% else %}
+                                <img class="image image-rounded" 
+                                    data-small="{{site.url}}images/no-picture.png" 
+                                    data-small-retina="{{site.url}}images/no-picture.png" 
+                                    data-large="{{site.url}}images/no-picture.png" 
+                                    data-large-retina="{{site.url}}images/no-picture.png"
+                                    src="{{site.url}}images/no-picture.png"
+                                    alt="Hire the best car for the holiday">  
+                             {% endif %}                                                                       
+                                </div>						   
+                                <div class="col-md-8">
+                                    <strong class="name">{{statement.car.name}} <span class ="pull-right"> <span class="text-success fa  fa-check-square-o fa-3x" title="Selected car"></span></span></strong>
+                                        {% if statement.car.description is defined %}<p class="description">{{statement.car.description}}</p>{% endif %}                                                                     
+                                        <div class="col-md-12 rate">
+                                        Rate/day {{site.currency}}{% if statement.car.rate is defined %}{{statement.car.rate}}{% endif %} 
+                                        
+                                    <small><a href="#" class="pull-right btn btn-sm btn-info" title="Veiw car details" data-toggle="modal" data-target="#oc{{statement.car.id}}">Details</a></small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="modal fade" id="oc{{statement.car.id}}" tabindex="-1" role="dialog" aria-labelledby="UploadImageLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="UploadImageLabel"><strong class="name">{{statement.car.name}}</strong></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">   
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                        <div id="oc{{statement.car.id}}" class="carousel slide" data-ride="carousel">
+                                        <div class="carousel-inner">
+                                        {% for key,image in statement.car.images %}
+        
+                                        {% if key == 0%}
+                                        <div class="carousel-item active">
+                                        {% else %}
+                                        <div class="carousel-item">
+                                        {% endif %}
+                                        <img class="image responsive-image img-rounded" data-small="{{image.file}}" 
+                                        data-small-retina="{{image.file}}" data-large="{{image.file}}"
+                                        data-large-retina="{{image.file}}" src="{{image.file}}" alt="{{statement.car.description}}">
+                                        </div>
+                                        {% endfor %}
+                                        </div>
+                                        {% if statement.car.images|length != 1%}
+                                        <a class="carousel-control-prev" href="#oc{{statement.car.id}}" role="button" data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#o{{statement.car.id}}" role="button" data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                        </a>
+                                    {% endif %}
+                                    </div>
+                                    
+                                    </div>	
+                                        <div class="col-md-12">	
+                                            {% if statement.car.description is defined %}<p class="description">{{statement.car.description}}</p>{% endif %}
+                                                <div class="row">
+                                                    {% if statement.car.seats is defined %}<div class="col-md-6"><div class="option"><span class="fa fa-car"></span> {{statement.car.seats}} Seats</div></div>{% endif %}
+                                                    {% if statement.car.bags is defined %}<div class="col-md-6"><div class="option"><span class="fa fa-car"></span> {{statement.car.bags}} Bags</div></div>{% endif %}
+                                                    {% if statement.car.doors is defined %}<div class="col-md-6"><div class="option"><span class="fa fa-car"></span> {{statement.car.doors}} Doors</div></div>{% endif %}
+                                                    {% if statement.car.transmission is defined %} <div class="col-md-6"><div class="option"><span class="fa fa-check-square-o"></span> {{statement.car.transmission}}</div></div>{% endif %}
+                                                    {% if statement.car.fuel is defined %}{% if statement.car.fuel %}<div class="col-md-6"><div class="option"><span class="fa fa-check-square-o"></span> {{statement.car.fuel}}</div></div>{% endif %}{% endif %}
+                                                    {% if statement.car.aircon is defined %}{% if statement.car.aircon %}<div class="col-md-6"><div class="option"><span class="fa fa-check-square-o"></span> Air Con</div></div>{% endif %}{% endif %}
+                                                    {% if statement.car.leatherUpholstery is defined %}{% if statement.car.leatherUpholstery %}<div class="col-md-6"><div class="option"><span class="fa fa-check-square-o"></span> Leather Upholstery</div></div>{% endif %}{% endif %}
+                                                    {% if statement.car.gps is defined %}{% if statement.car.gps %}<div class="col-md-6"><div class="option"><span class="fa fa-check-square-o"></span> Built in GPS</div></div>{% endif %}{% endif %}
+                                                </div>                                                               
+                                            </div>                                                               
+                                    </div>
+                                </div>
+                            <div class="modal-footer">
+                                <div class="col-md-12 rate">
+                                Refundable Deposit  <span  class="pull-right">
+                                        <strong>{% if statement.car.deposit is defined %}{{site.currency}} {{statement.car.deposit}}{% endif %}</strong>
+                                        </span><br>
+                                    Rate/day  <span  class="pull-right">
+                                        <strong>{% if statement.car.rate is defined %}{{site.currency}}{{statement.car.rate}}{% endif %}</strong>
+                                        </span>
+                                        {% if statement.car.owner.website is not empty%}                                                                                        
+                                          <hr>
+                                            Provider <span class="pull-right"><a href="{{statement.car.owner.website}}" target="_blank">{{statement.car.owner.fullname}}</a></span>
+                                        {% endif %}
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        {% endif %}
+       
+            <div class="col-md-12">
+                <h5 class="title">Total 
+                   {% if statement.daysTillBookedDate is defined %} <small class="pull-right">{{statement.daysTillBookedDate}}  day(s) to booking </small> {% endif %}</h5>
+                    <br> 
+                    {% if statement.daysBooked is defined %}  Day(s) <span class="pull-right"><b>{{statement.daysBooked}}</b></span><br> {% endif %}
+                    {% if statement.car.rate is defined %}  Rate/day <span class="pull-right"><b>{{site.currency}} {{statement.car.rate}}</b></span><br>   {% endif %}
+                    {% if statement.car.deposit is defined%}   Refundable deposit <span class="pull-right"><b>{{site.currency}} {{statement.car.deposit}}</b></span><br>    {% endif %}
+            
+                        {% if statement.additionItems is defined%} 
+                            {% if statement.additionItems|length >0 %}
+                                <br><b class="text-primary">Additionals</b><br>
+                                {% for item in statement.additionItems %}
+                                    <span>{{item.description}}  <span class="pull-right"><b>{{site.currency}} {{item.amount}}</b> </span> </span><br>
+                                {% endfor %}
+                            {% endif %}
+                       {% endif %}
+
+                       {% if statement.discount is defined%} 
+                       {% if statement.discount|length >0 %}
+                          <br> <b class="text-primary">Discounts Applied</b><br>
+                           {% for item in statement.discount %}
+                               <span>{{item.name}} <small>- {{item.display}}%</small> <span class="pull-right"><b>{{site.currency}} {{item.total}}</b> </span><br></span>
+                           {% endfor %}
+                       {% endif %}
+                  {% endif %}
+                   
+                    {% if statement.totalBookingFee is defined%} <hr><h5 class="title">Total Due <span class="pull-right"><b>{{site.currency}} {{statement.totalBookingFee}}</b></span></h5> <hr>  {% endif %}
+
+                        {% if statement.levy is defined%} 
+                       {% if statement.levy|length >0 %}
+                           <b class="text-primary">Levies Applied</b><br>
+                           {% for item in statement.levy %}
+                               <span>{{item.name}} <small>{{item.amount}}%</small> <span class="pull-right"><b>{{site.currency}} {{item.total}}</b> </span><br></span>
+                           {% endfor %}
+                       {% endif %}
+                  {% endif %}
+
+                {% if statement.restrictions is defined%} 
+                    {% if statement.restrictions|length >0 %}
+                    <h6 class="title text-danger">Restrictions</h6>
+                    {% for item in statement.restrictions %}
+                        {% if item.state %}
+                        <small><span class="fa fa-warning text-warning"></span> {{item.description}}</small><br>
+                        {% endif %}                                            
+                    {% endfor %}
+                {% endif %}  
+            {% endif %}  
+            </div> 
+    </div>

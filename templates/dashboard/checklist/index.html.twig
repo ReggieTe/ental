@@ -1,0 +1,210 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block form %}
+<a href="/dashboard/rental/view/{{rentalId}}"><b>Back to Rental</b></a><br>
+{% if id %}
+
+
+
+        <b><a href="#" class="" data-toggle="modal" data-target="#IssueList">Issues ({{issues|length}})</a> <a href="#" class="pull-right" data-toggle="modal" data-target="#AddIssue"> Add Issue</a></b>    
+        <br>
+        <div class="modal fade" id="IssueList" tabindex="-1" role="dialog" aria-labelledby="IssueListLabel" aria-hidden="true">
+            <div class="modal-dialog  modal-dialog-centered" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="AddIssueLabel">Add Issue</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+            <div class="row">
+                {% if issues is defined %}
+                    {% for issue in issues %}
+                        <div class ="col-md-12" >
+                            <p>{{issue.description}}
+                            <a href="/dashboard/issue/delete/{{rentalId}}/{{id}}/{{issue.id}}" class="pull-right text-danger"><span class="fa fa-trash-o"></span> Delete</a> 
+                        </p>
+                    </div>
+                    {% endfor %}
+                {% endif %}  
+            </div>
+        </div>
+        </div>
+        </div>
+        </div>
+
+
+        <div class="modal fade" id="AddIssue" tabindex="-1" role="dialog" aria-labelledby="AddIssueLabel" aria-hidden="true">
+                <div class="modal-dialog  modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="AddIssueLabel"><b>Add Issue</b></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">      	
+                        <form  method="POST" action='{{path('addIssue')}}' enctype="multipart/form-data" >
+                            <textarea  name="issue" class="form-control" rows="4" cols="50"></textarea>
+                                <input type="hidden" name="id" value="{{id}}"> 
+                                <input type="hidden" name="rental" value="{{rentalId}}"> 
+                                <button type="submit"  class="btn btn-primary pull-right"><i class="fa fa-save"></i> Add Issue</button> 
+                            </form>                                                 
+                        </div>
+                    </div>
+                    
+                    </div>
+                </div>
+
+        <b><a href="#" class="" data-toggle="modal" data-target="#AvailableItemList"> Available items ({{availableItems|length}})</a> <a href="#" class="pull-right" data-toggle="modal" data-target="#AvailableItem"> Add Item</a></b>    
+        
+            <br>
+                <div class="modal fade" id="AvailableItemList" tabindex="-1" role="dialog" aria-labelledby="AddIssueLabel" aria-hidden="true">
+                <div class="modal-dialog  modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="AddIssueLabel">List Available Item</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body"> 
+                                        <div class="row">
+                                            {% if availableItems is defined %}
+                                                {% for issue in availableItems %}
+                                                    <div class ="col-md-12" >
+                                                        <p>{{issue.description}}
+                                                        <a href="/dashboard/available/item/delete/{{rentalId}}/{{id}}/{{issue.id}}" class="pull-right text-danger"><span class="fa fa-trash-o"></span> Delete</a> 
+                                                    </p>
+                                                    </div>
+                                                {% endfor %}
+                                            {% endif %}     
+                                    </div>                                                 
+                                </div>
+                        </div>               
+                    </div>
+                </div>
+
+
+            <div class="modal fade" id="AvailableItem" tabindex="-1" role="dialog" aria-labelledby="AddIssueLabel" aria-hidden="true">
+                <div class="modal-dialog  modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="AddIssueLabel"><b>Add Available Item</b></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">      	
+                        <form  method="POST" action='{{path('addAvailableItem')}}'>                    
+                                <label><strong>Qty/Amount</strong></label>                    
+                                <input type="text" name="amount" class="form-control">  
+                                <label><strong>Measurement</strong></label>                    
+                                <input type="text" name="measurement" class="form-control">  
+                                <label><strong>Description</strong></label> 
+                                <textarea  name="description" class="form-control" rows="4" cols="50"></textarea>
+                                <input type="hidden" name="id" value="{{id}}"> 
+                                <input type="hidden" name="rental" value="{{rentalId}}"> 
+                                <button type="submit"  class="btn btn-primary pull-right"><i class="fa fa-save"></i> Add Issue</button> 
+                            </form>                                                 
+                        </div>
+                    </div>               
+                    </div>
+                </div>
+
+
+        <b>
+        <a href="#" class="#" data-toggle="modal" data-target="#ListMissingItem">Missing items / Excess /Extras ({{missingItems|length}}) </a>
+        <a href="#" class="pull-right" data-toggle="modal" data-target="#AddMissingItem"> Add item</a>
+        </b>    
+        
+        <div class="modal fade" id="ListMissingItem" tabindex="-1" role="dialog" aria-labelledby="AddIssueLabel" aria-hidden="true">
+                <div class="modal-dialog  modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="AddIssueLabel"><b>Missing items / Excess /Extras</b></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                            <div class="row">
+                                {% if missingItems is defined %}
+                                    {% for issue in missingItems %}
+                                        <div class ="col-md-12" >
+                                           <p>{{issue.description}} <b>({{issue.measurement}} x ZAR{{issue.amount}})</b>   ZAR {{issue.total}}
+                                            <a href="/dashboard/missing/item/delete/{{rentalId}}/{{id}}/{{issue.id}}" class="pull-right text-danger"><span class="fa fa-trash-o"></span> Delete</a> 
+                                        </p>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}     
+                            </div>
+                            </div>
+                            </div>               
+                            </div>
+        </div>
+        </div>
+        </div>
+
+
+
+                <div class="modal fade" id="AddMissingItem" tabindex="-1" role="dialog" aria-labelledby="AddIssueLabel" aria-hidden="true">
+                <div class="modal-dialog  modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="AddIssueLabel"><b>Add Issue</b></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">      	
+                        <form  method="POST" action='{{path('addMissingItem')}}' >
+                        <label><strong>Amount(ZAR)</strong></label>                    
+                            <input type="text" name="amount" class="form-control" require="required">  
+                            <label><strong>Qty/Count</strong></label>                    
+                            <input type="number" name="measurement" class="form-control" require="required">  
+                            <label><strong>Description</strong></label> 
+                            <textarea  name="description" class="form-control" rows="4" cols="50" require="required"></textarea>
+                            <input type="hidden" name="id" value="{{id}}"> 
+                            <input type="hidden" name="rental" value="{{rentalId}}"> 
+                            <button type="submit"  class="btn btn-primary pull-right"><i class="fa fa-save"></i> Add Issue</button> 
+                        </form>                                                 
+                        </div>
+                    </div>               
+                    </div>
+                </div>
+        </div>
+        </div>
+{% endif %} 
+
+{{ form_start(form) }}
+  <div class="row">
+  <div class="col-md-12">
+      {{ form_row(form.type) }}
+  </div>
+      <div class="col-md-12">
+          {{ form_row(form.damageDescription) }}
+      </div>
+      <div class="col-md-6">
+          {{ form_row(form.milleage) }}
+      </div>
+      <div class="col-md-6">
+          {{ form_row(form.fuel_available) }}
+      </div>     
+      <div class="col-md-12">
+          {{ form_row(form.ownerAgreed) }}
+      </div>
+          
+      <div class="col-md-12">
+          {{ form_row(form.requestRenterToSign) }}
+      </div>
+      
+      
+      <div class="col-md-12">
+    <span class=" pull-right"> {{ form_row(form.update) }}</span>
+      </div>
+  </div>
+{{ form_end(form) }}
+
+{% endblock %}

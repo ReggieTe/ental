@@ -1,0 +1,6 @@
+    RewriteEngine on
+    RewriteCond $1 !^(img|files|images|favicon.ico|css|js|robots\.txt)
+    RewriteRule ^assets/(.*) public/build/$1
+    RewriteRule ^/images/$1 public/images/$1
+    #RewriteRule ^uploads/(.*) public/uploads/$1
+

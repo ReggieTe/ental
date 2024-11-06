@@ -1,0 +1,196 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block form %}
+
+{% if verifyPhone %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    Verify phone number to be able to receive sms notifications <a href="/dashboard/verify/phone" class="pull-right"><b>Verify Now</b></a>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+{% endif %}
+
+{% if verifyEmail %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    Verify email to be able to receive email notifications <a href="/dashboard/verify/email" class="pull-right"><b>Verify Now</b></a>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+{% endif %}
+
+ <div><b> Images ({{images|length}})   
+        <span class="pull-right"><a href="#" class="" data-toggle="modal" data-target="#UploadImage"><span class="fa fa-upload"></span>  Upload</a></span>
+        </b></div>  
+      <br>
+         <div class="row">
+        {% if images is defined %}        
+        <div class ="col-md-12" >
+            <div class="row">
+            {% for image in images %}
+                <div class ="col-md-3" >
+                    <a href="#" class="" data-toggle="modal" data-target="#{{image.file}}">
+                        <img class="img-rounded img-responsive" src="{{image.file}}" alt="Upload Image" style="height:100%;width:100%"/>
+                    </a>
+            <div class="modal fade" id="{{image.file}}" tabindex="-1" role="dialog" aria-labelledby="UploadImageLabel" aria-hidden="true">
+                <div class="modal-dialog  modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="UploadImageLabel"><b>Delete image</b></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                            <div class="modal-body">      	
+                                    <form  method="POST" action='{{path('profile_delete_image')}}' enctype="multipart/form-data" >
+                                        <img class="" src="{{image.file}}" alt="Upload Image" style="width:100%;height:100%"/>
+                                        <input type="hidden" name="id" value="{{image.id}}"> 
+                                        <br><br>
+                                            <button type="submit"  class="btn btn-small btn-primary pull-right"><i class="fa fa-trash"></i> Delete Image</button> 
+                                    </form> 
+                            </div>
+                
+                    </div>
+                </div>
+            </div>
+            </div>
+            {% endfor %}
+            <div>
+        </div><br><br>
+        {% endif %}
+   </div>
+    </div>
+    <div class="modal fade" id="UploadImage" tabindex="-1" role="dialog" aria-labelledby="UploadImageLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="UploadImageLabel"><b>Upload image</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">      	
+                            <div class="upload-list-image">
+                                <img class="list-image" style="width:100%" alt="Image Preview will show here" src="">
+                             <br><br>
+                                <form  method="POST" action='{{path('profile_upload_image')}}' enctype="multipart/form-data" >
+                                        <input type="file" name="file" id="listfile" class="filestyle"> 
+                                        <button type="submit"  class="btn btn-primary pull-right"><i class="fa fa-save"></i> Upload Image</button> 
+                                </form>                                                 
+                            </div>
+            </div>
+            
+            </div>
+        </div>
+</div>
+
+{{ form_start(form) }}          
+                <div class="row">
+                    <div class="col-md-12"> 
+                      {{ form_row(form.fullname) }}
+                    </div>
+                    <div class="col-md-6">                       
+                      {{ form_label(form.email) }} 
+                      <b><span class="pull-right" >
+                      {% if verifyEmail %} <a href="#" class="" data-toggle="modal" data-target="#verifyEmailOTP">Verify Email Now</a> {% endif %}
+                      {% if isEmailVerified %} <a href="#" class="text-success">Verified</a> {% endif %}</span></b>
+                      {{ form_errors(form.email) }}
+                      {{ form_widget(form.email) }}
+
+                    </div>  
+                    <div class="col-md-6"> 
+                      {{ form_label(form.phone) }} 
+                      <b><span class="pull-right" >
+                      {% if verifyPhone %} <a href="#" class="" data-toggle="modal" data-target="#verifyOTP">Verify OTP Now</a> {% endif %}
+                      {% if isPhoneVerified %} <a href="#" class="text-success">Verified</a> {% endif %}
+                
+                </span></b>
+                        {{ form_errors(form.phone) }}
+                        {{ form_widget(form.phone) }}
+                     </div>
+                     <div class="col-md-12">
+                        {{ form_row(form.website)}}
+                    </div>
+                     <div class="col-md-12">
+                        {{ form_row(form.address)}}
+                     </div> 
+                     <div class="col-md-12">
+                        {{ form_row(form.location)}}
+                     </div> 
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                        <h4><b>Payment methods</b></h4>
+                                </div>
+                                <div class="col-md-6">
+                                {{ form_row(form.isBankEnabled)}}
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form_row(form.isPayfastEnabled)}}
+                                </div>
+                                <div class="col-md-12">
+                                    {{ form_row(form.isPaypalEnabled)}}
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+
+ {{ form_end(form) }}
+
+ <div class="modal fade" id="verifyOTP" tabindex="-1" role="dialog" aria-labelledby="verifyOTPLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="verifyOTPLabel"><b>Verify OTP</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">      	
+                            <div class="otp-panel">
+                            <form  method="POST" action='{{path('Verify_Phone_Otp')}}' class="digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
+                            <input type="text" id="digit-1" name="digit-1" data-next="digit-2" />
+                            <input type="text" id="digit-2" name="digit-2" data-next="digit-3" data-previous="digit-1" />
+                            <input type="text" id="digit-3" name="digit-3" data-next="digit-4" data-previous="digit-2" />
+                            <input type="text" id="digit-4" name="digit-4"  data-previous="digit-3" />
+                                                                             
+                            </div>   <br>  <br>                       
+                             <button type="submit"  class="btn btn-primary btn-lg col-md-12"><i class="fa fa-save"></i> Verify now</button> 
+                                </form> 
+            </div>
+            
+            </div>
+        </div>
+</div>
+
+
+<div class="modal fade" id="verifyEmailOTP" tabindex="-1" role="dialog" aria-labelledby="verifyEmailOTPLabel" aria-hidden="true">
+<div class="modal-dialog  modal-dialog-centered" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="verifyEmailOTPLabel"><b>Verify Email OTP</b></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">      	
+                    <div class="otp-panel">
+                    <form  method="POST" action='{{path('Verify_Email_Otp')}}' class="digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
+                    <input type="text" id="digit-1" name="digit-1" data-next="digit-2" />
+                    <input type="text" id="digit-2" name="digit-2" data-next="digit-3" data-previous="digit-1" />
+                    <input type="text" id="digit-3" name="digit-3" data-next="digit-4" data-previous="digit-2" />
+                    <input type="text" id="digit-4" name="digit-4"  data-previous="digit-3" />
+                                                                     
+                    </div>   <br>  <br>                       
+                     <button type="submit"  class="btn btn-primary btn-lg col-md-12"><i class="fa fa-save"></i> Verify now</button> 
+                        </form> 
+    </div>
+    
+    </div>
+</div>
+</div>
+
+{% endblock %}

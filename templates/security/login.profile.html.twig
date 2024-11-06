@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+<div class="col-md-3 login-section" >
+
+    {% if error is defined %}
+        {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+    {% endif %}
+
+    {% if message is defined %}
+        {% if message %}
+        <div class="alert alert-danger">{{ message }}</div>
+        {% endif %}
+    {% endif %}
+<div class="login-form" >
+<form   method="post">
+    <h1 class="h3 mb-3 font-weight-normal"><b>Log in</b></h1>
+    <label for="inputEmail">Email</label>
+    <input type="email"  name="_email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+    <label for="inputPassword">Password</label> <span class="pull-right"><a href="/resetpassword" ><b>Forgot Password?</a></span>
+    <input type="password" name="_password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+    <input type="hidden" name="section"   value="dashboard" >
+    <input type="hidden" name="_csrf_token"    value="{{ csrf_token('authenticate') }}" >
+    <br>
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" name="_remember_me"> Remember me
+            </label>
+        </div>
+
+    <button class="btn btn-lg btn-primary col-md-12" type="submit">Sign in</button>
+    <br><br>
+    <p class="text-center">New here,need an account? <br><a href="/register"><b>Create account now</b></a></p> 
+    
+</form>
+</div>
+</div>
+{% endblock %}

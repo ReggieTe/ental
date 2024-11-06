@@ -1,0 +1,32 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block form %}
+<a href="/dashboard/profile/accounts"><b>Back to accounts</a><br>
+{{ form_start(form) }}          
+                <div class="row">
+                    <div class="col-md-12"> 
+                      {{ form_row(form.accountHolder) }}
+                    </div> 
+                     <div class="col-md-6">
+                        {{ form_row(form.accountType)}}
+                     </div> 
+                     <div class="col-md-6">
+                        {{ form_row(form.accountBank)}}
+                     </div> 
+                     <div class="col-md-12">
+                        {{ form_row(form.accountBranchCode)}}
+                     </div> 
+                     <div class="col-md-12">
+                        {{ form_row(form.accountNumber)}}
+                     </div> 
+                     <div class="col-md-12">
+                        {{ form_row(form.defaultAccount)}}
+                     </div>  
+             </div>
+
+
+ {{ form_end(form) }}
+
+ 
+
+{% endblock %}

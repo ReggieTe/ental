@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}About Us{% endblock %}
+
+{% block body %}
+<div id="page-header" class="section-container page-header-container bg-black">
+			<div class="page-header-cover">
+			</div>
+			<div class="container">
+				<h1 class="page-header pull-left"><b>Terms &amp; Conditions</b></h1>
+			</div>
+		</div>
+      <br>
+   <section class="privacy-policy">
+         <div class="container">
+            <div class="row">
+               <div class="col-sm-10 col-sm-offset-1">
+                 <div class="content">
+                                    {% for value in data %}
+                                        <h4 class="h4-xs"><a href="#">{{ value.title }}</a></h4>
+                                        <p>{{ value.body }}</p>
+                                    {% endfor %}                    
+                </div>
+				 </div>
+            </div>
+         </div>
+      </section>
+{% endblock %}

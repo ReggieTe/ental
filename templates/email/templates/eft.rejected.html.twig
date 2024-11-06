@@ -1,0 +1,13 @@
+{% extends 'email/base.html.twig' %}
+
+{% block body %}  
+    Hi {{user.fullname}}<br><br>
+    <h3>Invoice #{{invoice.id}}</h3>
+        The proof of payment you submitted has been rejected. <br>
+            Please contact our support if you think there was an error else upload the correct file.
+            <br>
+    <br><br><b>{{site.name}} Dream Team</b>  
+{% endblock body %}                                             
+
+
+													

@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="col-md-3"></div>
+<div class="col-md-3 login-section" >
+<div class="login-form" >
+  <h1 class="h3 mb-3 font-weight-normal"><b>Create Account</b></h1>
+    {{ form_start(form) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.plainPassword)}}
+        <span>Read  <b><a href="/terms" target="_blank">Terms &amp; conditions </a> | <a href="/disclaimer" target="_blank">Disclaimer</a>| <a href="/privacy" target="_blank">Privacy</a></b></span>
+        {{ form_row(form.agreeTerms) }}
+        <button class="btn btn-lg btn-primary col-md-12" type="submit">
+        Create Account Now
+    </button>
+    <br><br>
+    <p class="text-center"><span>Already have an account ? <br> <a href="/login"><b>Log in now</b></a></span></a></p> 
+    {{ form_end(form) }}
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}About Us{% endblock %}
+
+{% block body %}
+<div id="page-header" class="section-container page-header-container bg-black">
+			<div class="page-header-cover">
+			</div>
+			<div class="container">
+				<h1 class="page-header pull-left"><b>Contact Us</b></h1>
+			</div>
+		</div>
+      <br>
+     
+      <section class="contact">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-6 ">
+                  <div class="widget top-space margin-bottom-none">
+                     <div class="widget-header">
+                        {% for message in app.flashes('notice') %}
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                           {{ message }}
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                              </button>
+                           </div>
+                        {% endfor %}
+                     </div>
+                     {{ form(form) }} 
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <div class="widget margin-bottom-none">
+                     <div class="widget-header">
+                        <h1><b>Get in Touch</b></h1>
+                     </div>
+                     <p>Do you have ideas ,issues and solutions on how we can best improve our service ,please let us know</p>
+                     <hr>
+                     <h4 class="heading-primary"><strong>{{site.name}}</strong></h4>
+                     <ul class="list list-icons list-icons-style-3 mt-xlg">
+                        <li><i class="fa fa-fw fa-map-marker"></i> <strong>Address:</strong> {{site.address}}</li>
+                        <li><i class="fa fa-fw fa-phone"></i> <strong>Phone:</strong> {{site.phone}}</li>
+                        <li><i class="fa fa-fw fa-envelope"></i> <strong>Email:</strong> <a href="mailto:{{site.email}}">{{site.email}}</a></li>
+                     </ul>
+                     <hr>
+                     <h4 class="heading-primary">Business <strong>Hours</strong></h4>
+                     <ul class="list list-icons list-dark mt-xlg">
+                        <li><i class="fa fa-fw fa-clock-o"></i> Monday - Friday - 9am to 5pm</li>
+                        <li><i class="fa fa-fw fa-clock-o"></i> Saturday - 9am to 2pm</li>
+                        <li><i class="fa fa-fw fa-clock-o"></i> Sunday - Opened</li>
+                     </ul>
+                     <br>
+                        <div class="map-container">
+   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3315.1823943400514!2d18.50528701520859!3d-33.80760588067326!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc5f44fcefa615%3A0x82cee4a35ce2e335!2s6%20Caernarvon%20Cres%2C%20Milnerton%20Rural%2C%20Cape%20Town%2C%207441!5e0!3m2!1sen!2sza!4v1621279364507!5m2!1sen!2sza" style="border:0;" allowfullscreen="" loading="lazy" width="100%" height="450"></iframe>
+</div>
+                  </div>
+                  
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- End Contact Us -->
+
+
+
+   
+      <br>{% endblock %}

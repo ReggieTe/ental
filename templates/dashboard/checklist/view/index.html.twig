@@ -1,0 +1,287 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block form %}
+
+<a href="/dashboard/rental/view/{{checklist.rental}}"><b>Back to Rental</b></a><br>
+
+
+
+<div class="row">
+  <div class="col-md-6">
+  <div class="row">
+    <div class="col-md-12">
+<h1 class="fs-title">{{ checklist.type }} </h1>
+<span class="text-success"><b>{{ checklist.status }}</b></span><br><br>
+    </div>
+      <div class="col-md-12">
+<p><strong>Damages</strong>
+<br>{{ checklist.description }}</p>
+      </div>
+      <div class="col-md-6">
+    <p><strong>Milleage</strong><br>
+         {{ checklist.milleage }} km</p>
+      </div>
+      <div class="col-md-6">
+    <p><strong>Available Fuel</strong><br>
+    {{ checklist.fuelAvailable }}</p>
+          
+      </div>       
+      <div class="col-md-12">
+           <b><a href="#" class="" data-toggle="modal" data-target="#IssueList">Issues ({{issues|length}})</a></b><br>
+           <b><a href="#" class="" data-toggle="modal" data-target="#AvailableItemList"> Available items ({{availableItems|length}})</a></b><br>
+      </div>
+      
+      {% if missingItems is defined %}      
+      <div class="col-md-12"><br>
+        <b class="text-primary">Missing items / Excess /Extras ({{missingItems|length}})</b><br>
+        {% for issue in missingItems %}
+                {{issue.description}} <b>
+                ({{issue.measurement}} x ZAR{{issue.amount}})</b>  <span class="pull-right"> ZAR {{issue.total}}</span><br>
+            {% endfor %}
+        </div>   
+        {% endif %}        
+
+    </div>
+</div>
+<div class="col-md-6">
+     
+
+<div class="row vehicle">
+<div class="col-md-12"> 
+          <h1 class="fs-title">{{ checklist.car.name }} </h1>
+                <div id="o{{checklist.car.id}}" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                        {% for key,image in checklist.car.images %}
+
+                        {% if key == 0%}
+                        <div class="carousel-item active">
+                        {% else %}
+                        <div class="carousel-item">
+                        {% endif %}
+                        <img class="image responsive-image img-rounded" data-small="{{image.file}}" 
+                        data-small-retina="{{image.file}}" data-large="{{image.file}}"
+                        data-large-retina="{{image.file}}" src="{{image.file}}" alt="{{checklist.car.description}}">
+                        </div>
+                        {% endfor %}
+                        </div>
+                        {% if checklist.car.images|length != 1%}
+                        <a class="carousel-control-prev" href="#o{{checklist.car.id}}" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#o{{checklist.car.id}}" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                        </a>
+                        {% endif %}
+                </div> 
+                </div>
+    
+            <div class="col-md-12">	
+                {% if checklist.car.description is defined %}<p class="description"><br>{{checklist.car.description}}</p>{% endif %}
+                    <div class="row">
+                        {% if checklist.car.seats is defined %}<div class="col-md-4"><div class="option"><span class="fa fa-checklist.car"></span> {{checklist.car.seats}} Seats</div></div>{% endif %}
+                        {% if checklist.car.bags is defined %}<div class="col-md-4"><div class="option"><span class="fa fa-checklist.car"></span> {{checklist.car.bags}} Bags</div></div>{% endif %}
+                        {% if checklist.car.doors is defined %}<div class="col-md-4"><div class="option"><span class="fa fa-checklist.car"></span> {{checklist.car.doors}} Doors</div></div>{% endif %}
+                        {% if checklist.car.transmission is defined %} <div class="col-md-12"><div class="option"><span class="fa fa-check-square-o"></span> {{checklist.car.transmission}}</div></div>{% endif %}
+                        {% if checklist.car.fuel is defined %}{% if checklist.car.fuel %}<div class="col-md-12"><div class="option"><span class="fa fa-check-square-o"></span> {{checklist.car.fuel}}</div></div>{% endif %}{% endif %}
+                        {% if checklist.car.aircon is defined %}{% if checklist.car.aircon %}<div class="col-md-12"><div class="option"><span class="fa fa-check-square-o"></span> Air Con</div></div>{% endif %}{% endif %}
+                        {% if checklist.car.leatherUpholstery is defined %}{% if checklist.car.leatherUpholstery %}<div class="col-md-12"><div class="option"><span class="fa fa-check-square-o"></span> Leather Upholstery</div></div>{% endif %}{% endif %}
+                        {% if checklist.car.gps is defined %}{% if checklist.car.gps %}<div class="col-md-12"><div class="option"><span class="fa fa-check-square-o"></span> Built in GPS</div></div>{% endif %}{% endif %}
+                    </div>                                                               
+                </div>                                                               
+            </div>
+            <div class="col-md-12 rate">
+            Refundable Deposit  <span  class="pull-right">
+            <strong>ZAR {% if checklist.car.deposit is defined %}{{checklist.car.deposit}}{% endif %}</strong>
+            </span><br>
+            Rate/day  <span  class="pull-right">
+            <strong>ZAR {% if checklist.car.rate is defined %}{{checklist.car.rate}}{% endif %}</strong>
+            </span>
+            </div>
+
+
+
+</div>    
+</div>
+
+{% if restrictions is defined%} 
+{% if restrictions|length >0 %}
+<div class="col-md-12"><br>
+<b class="text-danger">Restrictions</b><br>
+{% for item in restrictions %}
+    {% if item.state %}
+    <small><span class="fa fa-warning text-warning"></span> {{item.description}}</small><br>
+    {% endif %}                                            
+{% endfor %}
+ </div>
+{% endif %}  
+{% endif %}
+
+{# {% if checklist.done %} #}
+<div class="col-md-12">
+    <br>
+        <b class="text-danger">Totals</b><br>
+
+            Refundable Deposit Paid  <span  class="pull-right">
+        <strong>ZAR {% if checklist.car.deposit is defined %}{{checklist.car.deposit}}{% endif %}</strong>
+        </span><br>
+        {% if missingItems is defined %}      
+        <div class="col-md-12"><br>
+          <b class="text-primary">Missing items / Excess /Extras ({{missingItems|length}})</b><br>
+          {% for issue in missingItems %}
+                  {{issue.description}} <b>
+                  ({{issue.measurement}} x ZAR{{issue.amount}})</b>  <span class="pull-right"> <b>ZAR {{issue.total}}</b></span><br>
+              {% endfor %}
+          </div>   
+          {% endif %}  
+    <br>
+        <hr>
+        Payable Refundable Deposit  <span class="pull-right"><b>ZAR {{refundableDeposit}}</b></span>
+    <hr> 
+</div>
+{# {% endif %}  #}
+
+    <div class="col-md-12">
+    <br>
+        <b class="text-danger">Agreements</b>
+        <p>
+        {% if checklist.ownerAgreed %}  
+        <span class="fa fa-check-square-o text-danger fa-1x"></span> Car owner agrees with the condition of the vehicle described here<br>
+        
+        {% endif %}
+
+        {% if checklist.renterAgreed %}  
+            <span class="fa fa-check-square-o text-danger fa-1x"></span> Renter agrees with the condition of the vehicle described here
+        
+        {% else %}
+        I the undersign agree that all the damages recorded above occurred during my rental, and I hereby 
+        authorise Supercharcarrental to charge me as per the Terms of service of this Rental Agreement
+
+    </p>
+    <a href="#"  class="pull-right"  data-toggle="modal" data-target="#SignDocument"><b> Sign / Approve Checklist <span class="fa fa-pencil"></span></b></a>
+    </div>
+    {% endif %}
+        
+    </div>
+
+
+</div>
+
+
+<div class="modal fade" id="SignDocument" tabindex="-1" role="dialog" aria-labelledby="SignDocumentLabel" aria-hidden="true">
+<div class="modal-dialog  modal-dialog-centered" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="SignDocumentLabel"><b>Sign Document</b></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">      	
+                    <div class="upload-list-document">
+                        <form  method="POST" action='{{path('SignDocument')}}'>
+                        <input type="hidden" name="id" value="{{checklist.id}}">
+                        <input type="hidden" name="rental" value="{{checklist.rental}}">
+                        <select name="agree" class="form-control" title="Sign" >                        
+                            <option value="" >Select type</option>
+                                {% for id,name in types %} 
+                                    <option value="{{id}}">{{name}}</option>
+                                {% endfor %}
+                            </select>
+                                <button type="submit"  class="btn btn-primary pull-right"><i class="fa fa-save"></i> Update</button> 
+                        </form>                                                 
+                    </div>
+    </div>
+    
+    </div>
+</div>
+</div>
+
+
+
+
+    <div class="modal fade" id="IssueList" tabindex="-1" role="dialog" aria-labelledby="IssueListLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddIssueLabel">List of issues</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+        <div class="row">
+            {% if issues is defined %}
+                {% for issue in issues %}
+                    <div class ="col-md-12" >
+                        <p>{{issue.description}}</p>
+                </div>
+                {% endfor %}
+            {% endif %}  
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+
+ 
+       <div class="modal fade" id="AvailableItemList" tabindex="-1" role="dialog" aria-labelledby="AddIssueLabel" aria-hidden="true">
+            <div class="modal-dialog  modal-dialog-centered" role="document">
+                <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="AddIssueLabel">List of available items</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body"> 
+                                    <div class="row">
+                                        {% if availableItems is defined %}
+                                            {% for issue in availableItems %}
+                                                <div class ="col-md-12" >
+                                                    <p>{{issue.description}}
+                                                    </p>
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}     
+                                </div>                                                 
+                            </div>
+                    </div>               
+                </div>
+            </div>
+
+        
+    
+    <div class="modal fade" id="ListMissingItem" tabindex="-1" role="dialog" aria-labelledby="AddIssueLabel" aria-hidden="true">
+            <div class="modal-dialog  modal-dialog-centered" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="AddIssueLabel">List of missing items / excess / extras</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                        <div class="row">
+                            {% if missingItems is defined %}
+                                {% for issue in missingItems %}
+                                    <div class ="col-md-12" >
+                                        <p>{{issue.description}} <b>({{issue.measurement}} x ZAR{{issue.amount}})</b>   ZAR {{issue.total}}
+                                    </p>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}     
+                        </div>
+                        </div>
+                        </div>               
+                        </div>
+    </div>
+    </div>
+    </div>
+
+
+
+
+{% endblock %}

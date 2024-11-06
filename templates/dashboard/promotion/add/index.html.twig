@@ -1,0 +1,35 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block form %}
+<a href="/dashboard/profile/promotions"><b>Back to promotions</a><br>
+{{ form_start(form) }}          
+                <div class="row">
+                    <div class="col-md-12"> 
+                      {{ form_row(form.name) }}
+                    </div> 
+                     <div class="col-md-6">
+                        {{ form_row(form.amount)}}
+                     </div> 
+                     <div class="col-md-6">
+                        {{ form_row(form.type)}}
+                     </div> 
+                     <div class="col-md-12">
+                        {{ form_row(form.description)}}
+                     </div> 
+                     <div class="col-md-6">
+                        {{ form_row(form.startDate)}}
+                     </div> 
+                     <div class="col-md-6">
+                        {{ form_row(form.endDate)}}
+                     </div> 
+                     <div class="col-md-12">
+                        {{ form_row(form.active)}}
+                     </div>   
+             </div>
+
+
+ {{ form_end(form) }}
+
+ 
+
+{% endblock %}

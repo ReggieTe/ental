@@ -1,0 +1,12 @@
+{% extends 'email/base.html.twig' %}
+
+{% block body %}  
+    Hi {{user.fullname}}<br><br>
+    Thank you for creating an Account on {% if site.name is defined %} {{site.name}} {% endif %}. Click <a href='{{link}}'>Verify Account</a> 
+    {% if site.name is defined %}
+<br><br><b>{{site.name}} Dream Team</b>   
+    {% endif %}
+{% endblock body %}                                             
+
+
+													

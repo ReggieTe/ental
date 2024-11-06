@@ -1,0 +1,403 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="loading">Loading&#8230;</div>
+<input type="hidden" name="current" id="current" value="{{current}}">
+<div class="container-fluid" id="grad1"  style="" >
+<br>
+<h1 class="text-center fs-title text-danger">Rent A Car Now</h1>
+{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                  <div class="row  justify-content-center ">
+                      <div class="col-8 col-sm-6 col-md-6 col-lg-6 text-center p-0 mt-3 mb-2">                
+                            <ul id="progressbar">
+                                <li class="active" id="location"><a href="#" class="location-btn"><b>Pick up &amp; Drop off</b></a></li>
+                                <li id="cars"><a href="#" class="cars-btn"><b>Select Vehicle</b></a></li>
+                                <li id="documents"><a href="#" class="documents-btn"><b>Documents</b></a></li>
+                                <li id="invoice"><a href="#" class="invoice-btn"><b>Invoice</b></a></li>
+                                <li id="payments"><a href="#" class="payment-btn"><b>Payment</b></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                {% endif %}
+        <div class="row justify-content-center">
+        <div class="col-sm-12 col-md-4 col-lg-4 text-center">
+            <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form id="msform">
+                            <fieldset class ="location">
+                                <div class="form-card">
+                                    <h2 class="fs-title">Pick up and Drop off</h2> 
+                                    <div class="alert alert-danger hide" id="error-message" role="alert"></div>                                
+								<div class="row">
+                                <div class="input-field col-md-12">                                
+									<label for="select-phone-1" class=""><b>Pick up Location</b></label>
+                                    <label for="select-phone-1" class="pull-right text-danger"><small><div class="spinner-grow spinner-grow-sm hide" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                  </div><span class="location-available-car-notification">
+                                        </span></small></label>
+									<input type="text" name="location" id="address" class="autocomplete validate form-control" required="required" placeholder="Pick up location" >
+								</div>
+                                <div class="input-field col-md-12">
+                                    <p>
+                                    <input type="checkbox" id="pickSameAsDrop" class="#" name="pickSameAsDrop" checked="checked"> Drop off location is the same as pick up location
+                                    </p>
+                                </div>
+                                <div class="input-field col-md-12 hide" id="dlocation-form">                                
+									<label for="select-phone-1" class=""><b>Drop off Location</b></label>
+									<input type="text" name="dlocation" id="dlocation" class="autocomplete validate form-control" placeholder="Drop off location">
+								</div>
+								<div class="input-field col-md-6">
+								<label for="select-phone-1" class=""><b>Pick Up Date</b></label>
+									<input type="datetime-local" name="pickupdate" id="pickupdate" class="autocomplete validate form-control" required="required">
+									
+								</div>
+								<div class="input-field col-md-6">
+								<label for="select-phone-1" class=""><b>Return Date</b></label>
+									<input type="datetime-local" name="returndate" id="returndate" class="autocomplete validate form-control" required="required">
+								</div>															
+                                </div>
+                               <p class="pull-left text-primary"><span class="fa fa-check-square fa-1x"></span><b> Driver must be 18 years old +</b> </p>															
+                                </div>
+                                <input type="button" name="next" class="next action-button pull-right btn btn-lg" value="Next Step"/>
+                            </fieldset>
+                            <fieldset class ="cars">
+                                <div class="form-card">
+                                    <h2 class="fs-title">Available vehicles (<span class="vehicle-count">{{cars|length }}</span>)</h2>
+                                
+                                <a href="#" id="filters"><b><i class="fa fa-filter"></i> Filters</b></a><br><br>
+                                <div class="filter-section hide">
+                                    <div class="col-md-12">
+                                      <div class="row">                                
+                                         <div class="col-md-4">
+                                            <label for="cars">Transmission</label>
+                                            <select name="filter-transmission" id="filter-transmission" class="form-control">                                   
+                                            <option value="">Select</option>
+                                            {% for key,type in filters.transmission %}
+                                                <option value="{{key}}">{{type}}</option>
+                                            {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="cars">Fuel</label>
+                                            <select name="filter-fuel" id="filter-fuel" class="form-control">                                   
+                                            <option value="">Select</option>
+                                            {% for key,type in filters.fuel %}
+                                                <option value="{{key}}">{{type}}</option>
+                                            {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="cars">Seats</label>
+                                            <select name="filter-seats" id="filter-seats" class="form-control">                                   
+                                                <option value="">Select</option>
+                                            {% for key,type in filters.seats %}
+                                                <option value="{{key}}">{{type}}</option>
+                                            {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="cars">Doors</label>
+                                            <select name="filter-doors" id="filter-doors" class="form-control">                                   
+                                            <option value="">Select</option>
+                                            {% for key,type in filters.doors %} 
+                                                <option value="{{key}}">{{type}}</option>
+                                            {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="cars">Brand</label>
+                                            <select name="filter-brand" id="filter-brand" class="form-control">                                   
+                                                <option value="">Select</option>
+                                            {% for key,type in filters.brand %} 
+                                                <option value="{{key}}">{{type}}</option>
+                                            {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="cars">Rate/day</label>
+                                            <select name="filter-price" id="filter-price" class="form-control">                                   
+                                            <option value="">Select</option>
+                                            {% for key,type in filters.price %} 
+                                                <option value="{{key}}">{{type}}</option>
+                                            {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="cars">Deposit</label>
+                                            <select name="filter-deposit" id="filter-deposit" class="form-control">                                   
+                                                <option value="">Select</option>
+                                            {% for key,type in filters.deposit %}
+                                                <option value="{{key}}">{{type}}</option>
+                                            {% endfor %}
+                                            </select>
+                                        </div>
+                                        
+                                      </div>
+                                    </div>
+                                     <a href="#" id="filters-clear" class="pull-right text-danger"><b><span class="fa fa-trash-o"></span> Clear filters</b></a><br>
+                                </div>
+                                <div class="loading-vehicles hide">	 
+                                <br><br><br>  			
+                               <h2 class="fs-title text-center">Getting vehicles</h2> <br>                                               
+                                    <div class="d-flex justify-content-center status-process">
+                                        <div class="spinner-border" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>		
+                                    <div  id="vehicles" class="display-vehicles">
+                                        <ul>
+                                            {% for car in cars %} 
+                                                    <li> 
+                                                        <div class="vehicle" > 
+                                                            <div class="col-md-12">
+                                                                <div class="row">
+                                                                    <div class="col-md-4">                                                   
+                                                                    {% if car.images|length != 0%}
+                                                                    <a href="#" class="" title="Veiw car details" data-toggle="modal" data-target="#{{car.id}}">
+                                                                            <img class="image img-rounded" style="width:100%" data-small="{{car.images | first.file}}" 
+                                                                            data-small-retina="{{car.images | first.file}}" data-large="{{car.images | first.file}}"
+                                                                        data-large-retina="{{car.images | first.file}}" src="{{car.images | first.file}}" alt="{{car.description}}">
+                                                                    </a>
+                                                                    {% else %}
+                                                                    <img class="image image-rounded" 
+                                                                        data-small="{{site.url}}images/no-picture.png" 
+                                                                        data-small-retina="{{site.url}}images/no-picture.png" 
+                                                                        data-large="{{site.url}}images/no-picture.png" 
+                                                                        data-large-retina="{{site.url}}images/no-picture.png"
+                                                                        src="{{site.url}}images/no-picture.png"
+                                                                        alt="Hire the best car for the holiday">    
+                                                                {% endif %}                                                                       
+                                                                    </div>						   
+                                                                    <div class="col-md-8">
+                                                                    <div class="car-body">
+                                                                        <strong class="name">{{car.name}} <span class ="pull-right"><input type="radio" id="selected-vehicle" name="selected-vehicle" value="{{car.id}}"> </span></strong>
+                                                                            {% if car.description is defined %}<p class="description">{{car.description}}</p>{% endif %}                                                                     
+                                                                            <div class="col-md-12 rate">
+                                                                            Rate/day {{site.currency}} {% if title is defined %}{{car.rate}}{% endif %} 
+                                                                            
+                                                                        <small><a href="#" class="pull-right btn btn-sm btn-info" title="Veiw car details" data-toggle="modal" data-target="#{{car.id}}">Details</a></small></br>
+                                                                        </div> 
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                            <div class="modal fade" id="{{car.id}}" tabindex="-1" role="dialog" aria-labelledby="UploadImageLabel" aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="UploadImageLabel"><strong class="name">{{car.name}}</strong></h5>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">   
+                                                                                <div class="row">
+                                                                                    <div class="col-md-12">
+                                                                                    <div id="o{{car.id}}" class="carousel slide" data-ride="carousel">
+                                                                                    <div class="carousel-inner">
+                                                                                      {% for key,image in car.images %}
+                                                    
+                                                                                      {% if key == 0%}
+                                                                                      <div class="carousel-item active">
+                                                                                      {% else %}
+                                                                                      <div class="carousel-item">
+                                                                                    {% endif %}
+                                                                                      <img class="image responsive-image img-rounded" data-small="{{image.file}}" 
+                                                                                      data-small-retina="{{image.file}}" data-large="{{image.file}}"
+                                                                                     data-large-retina="{{image.file}}" src="{{image.file}}" alt="{{car.description}}">
+                                                                                    </div>
+                                                                                    {% endfor %}
+                                                                                    </div>
+                                                                                    {% if car.images|length != 1%}
+                                                                                    <a class="carousel-control-prev" href="#o{{car.id}}" role="button" data-slide="prev">
+                                                                                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                                                      <span class="sr-only">Previous</span>
+                                                                                    </a>
+                                                                                    <a class="carousel-control-next" href="#o{{car.id}}" role="button" data-slide="next">
+                                                                                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                                                      <span class="sr-only">Next</span>
+                                                                                    </a>
+                                                                                   {% endif %}
+                                                                                  </div>
+                                                                                  
+                                                                                </div>	
+                                                                                    <div class="col-md-12">	
+                                                                                        {% if car.description is defined %}<p class="description">{{car.description}}</p>{% endif %}
+                                                                                            <div class="row">
+                                                                                                {% if car.seats is defined %}<div class="col-md-6"><div class="option"><span class="fa fa-car"></span> {{car.seats}} Seats</div></div>{% endif %}
+                                                                                                {% if car.bags is defined %}<div class="col-md-6"><div class="option"><span class="fa fa-car"></span> {{car.bags}}Bags</div></div>{% endif %}
+                                                                                                {% if car.doors is defined %}<div class="col-md-6"><div class="option"><span class="fa fa-car"></span> {{car.doors}} Door</div></div>{% endif %}
+                                                                                                {% if car.transmission is defined %} <div class="col-md-6"><div class="option"><span class="fa fa-check-square-o"></span> {{car.transmission}}</div></div>{% endif %}
+                                                                                                {% if car.fuel is defined %}{% if car.fuel %}<div class="col-md-6"><div class="option"><span class="fa fa-check-square-o"></span> {{car.fuel}}</div></div>{% endif %}{% endif %}
+                                                                                                {% if car.aircon is defined %}{% if car.aircon %}<div class="col-md-6"><div class="option"><span class="fa fa-check-square-o"></span> Air Con</div></div>{% endif %}{% endif %}
+                                                                                                {% if car.leatherUpholstery is defined %}{% if car.leatherUpholstery %}<div class="col-md-6"><div class="option"><span class="fa fa-check-square-o"></span> Leather Upholstery</div></div>{% endif %}{% endif %}
+                                                                                                {% if car.gps is defined %}{% if car.gps %}<div class="col-md-6"><div class="option"><span class="fa fa-check-square-o"></span> Built in GPS</div></div>{% endif %}{% endif %}
+                                                                                            </div>                                                               
+                                                                                        </div>                                                               
+                                                                                </div>
+                                                                            </div>
+                                                                        <div class="modal-footer">
+                                                                            <div class="col-md-12 rate">
+                                                                            Refundable Deposit  <span  class="pull-right">
+                                                                                    <strong>{{site.currency}} {% if car.deposit is defined %}{{car.deposit}}{% endif %}</strong>
+                                                                                    </span><br>
+                                                                                Rate/day  <span  class="pull-right">
+                                                                                    <strong>{{site.currency}} {% if car.rate is defined %}{{car.rate}}{% endif %}</strong>
+                                                                                    </span>
+                                                                                        {% if car.owner.website is not empty%}                                                                                        
+                                                                                          <hr>
+                                                                                            Provider <span class="pull-right"><a href="{{car.owner.website}}" target="_blank">{{car.owner.fullname}}</a></span>
+                                                                                        {% endif %}
+                                                                    
+                                                                                </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div> 
+                                                    </li>
+                                                {% endfor %}
+                                        </ul>
+                                    </div>
+                                    
+
+                                </div>
+                                <input type="button" name="previous" class="previous action-button-previous pull-left btn btn-lg" value="Previous"/>
+                                  {% if cars|length > 0 %} <input type="button" name="next" class="next action-button pull-right btn btn-lg" value="Next Step"/>{% endif %}
+                            </fieldset>
+                            <fieldset class ="documents">
+                                <div class="form-card">
+                                    <h2 class="fs-title">Documents</h2>
+                                    <div class ="documents-list">
+                                                {% if documents  is defined %}
+                                                    {% if documents |length < 3 %}
+                                                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                                                            To be able to rent a vehicle the the following documentation is required :
+                                                            <ul>
+                                                                <li> - ID / Passport</li>
+                                                                <li> - Driver's license</li>
+                                                                <li> - Proof of address</li>
+                                                            </ul>
+                                                              <a href="/dashboard/documents" class="btn btn-warning"><span class="fa fa-upload"></span> Upload now</a><br>
+                                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                    {% endif %}
+                                                {% endif %}
+                                                {% if documents is defined %}
+                                                   {% if documents |length is same as(3) %}
+                                                        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                                                         These are the documents that will be used for your current booking ! Go to <a href="/dashboard/documents">Documents</a> to change them
+                                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                    {% endif %}
+                                                    <ul>
+                                                    {% for image in documents %}
+                                                       <li> 
+                                                            <div class="row">
+                                                            <div class ="col-md-12" >
+                                                               <div class ="document-item" > 
+                                                               <div class="row">
+                                                                    <div class="col-md-6">
+                                                               <h5><strong><a href="{{image.file}}" target="_blank"class="option" title="Click to download document" >
+                                                                    <span class="fa fa-file-pdf fa-2x"></span> {{image.type}}</a></strong>
+                                                                </h5>                        
+                                                            </div>
+                                                                <div class="col-md-6">
+                                                                        <span class="options pull-right">
+                                                                        <span class="text-success fa  fa-check-circle fa-3x" title="Document approved"></span>
+                                                               </div>
+                                                            </div>  
+                                                            </div>
+                                                           </div>
+                                                        </li>
+                                                    {% endfor %}
+                                                    </ul>
+                                                {% endif %}
+                                    </div>
+                                </div>
+                                    <input type="button" name="previous" class="previous action-button-previous pull-left btn btn-lg" value="Previous"/>
+                                    {% if documents  is defined %}
+                                    {% if documents |length > 2 %}
+                                    <input type="button" name="next" class="next action-button pull-right btn btn-lg" value="Next"/>
+                                    {% endif %}
+                                {% endif %}
+                            </fieldset>                            
+                            <fieldset class="invoice">
+                                 <div class="form-card">
+                                    <div class="generate-statement hide"><br><br>
+                                        <h2 class="fs-title text-center">Generating invoice</h2> <br>                                               
+                                            <div class="d-flex justify-content-center status-process">
+                                                <div class="spinner-border" role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                            </div>                    
+                                    </div>
+                                     <div class="statement">                                   
+                                    </div>                               
+                                </div>
+                               <input type="button" name="previous" class="previous action-button-previous pull-left btn btn-lg" value="Previous"/>
+                               <input type="button" name="next" class="next action-button pull-right btn btn-lg" value="Next"/>
+                            </fieldset>
+                            <fieldset class="payments">
+                               <div class="form-card"> 
+                                    <div class="generate-totals hide"><br><br>
+                                        <h2 class="fs-title text-center">Calculating totals</h2> <br>                                               
+                                        <div class="d-flex justify-content-center status-process">
+                                            <div class="spinner-border" role="status">
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
+                                        </div>                    
+                                    </div>
+                                    <div class="totals">                                   
+                                </div>
+                                </div>
+                                <input type="button" name="previous" class="previous action-button-previous pull-left btn btn-lg" value="Previous"/>
+                                <input type="button" name="make_payment" class="next action-button pull-right btn btn-lg" value="Pay now"/> 
+                            </fieldset>
+                        </form>
+                        <br>
+                           
+                        <br>
+                    </div>
+                      
+                </div>
+            </div>
+            
+                <div class="mobile-menu-item continue-booking">
+                    <a href="/dashboard/rentals" class="col-md-12 btn btn-lg btn-primary"><i class="fa fa-list" aria-hidden="true"></i>
+                Manage bookings </a>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid" style="background:#fff">
+<div class="whyus">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h4 class="fs-title">Why us?</h4>
+                <p>We can assure you that hiring a car  from us will be the utmost benefit.<br>
+                We have multiple rental companies affiliated with us across the country so <br>that we can give you more options and also best deals
+                <br>Rent with us we gurantee that you don't have to spend more than neccassary.</p>
+                <ul>
+                <li><span class="fa fa-check-square-o fa-2x"></span> <b>Quick &amp; seamless booking process</b></li>
+                <li><span class="fa fa-check-square-o fa-2x"></span> <b>Wide variety of cars available</b></li>
+                <li><span class="fa fa-check-square-o fa-2x"></span> <b>Vehicle is delivered to your location</b></li>
+                </ul>
+            <h1 class="fs-title">Get the Best Deals  {{site.currency}} 399</h1>
+            </div>
+                <div class="col-md-4">
+                <img class="image responsive-image img-rounded" src="/images/car-hire.png" alt="Car Hire">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

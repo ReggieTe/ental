@@ -1,0 +1,15 @@
+{% extends 'email/base.html.twig' %}
+
+{% block body %}  
+    Hi<br>
+    <p>One Time Passcode</p>
+    <h1 style="color:#000;font-size:30px">{{code}}</h1>
+    <br><br><small>Please let us know ,if you didn't change your password otherwise ignore this email.</small>
+    
+        {% if site.name is defined %}
+    <br><br><b>{{site.name}} Dream Team</b>   
+        {% endif %}
+{% endblock body %}                                             
+
+
+													

@@ -1,0 +1,126 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block form %}
+{% if id %}
+ <b>Images ({{images|length}})  <a href="#" class="pull-right" data-toggle="modal" data-target="#UploadImage"> Upload Image </a></b> 
+ <br><br>
+    <div class="row">
+        {% if images is defined %}
+            {% for image in images %}
+                <div class ="col-md-3" >
+                    <a href="#" class="" data-toggle="modal" data-target="#{{image.file}}">
+                        <img class="img-rounded" src="{{image.file}}" alt="Upload Image" style="padding-bottom:5px;height:100%;width:100%"/>
+                    </a>
+            <div class="modal fade" id="{{image.file}}" tabindex="-1" role="dialog" aria-labelledby="UploadImageLabel" aria-hidden="true">
+                <div class="modal-dialog  modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="UploadImageLabel"><b>Delete image</b></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                            <div class="modal-body">      	
+                                    <form  method="POST" action='{{path('delete_image')}}' enctype="multipart/form-data" >
+                                        <img class="" src="{{image.file}}" alt="Upload Image" style="width:100%;height:100%"/>
+                                        <br><br>
+                                            <input type="hidden" name="type" value="car">  
+                                            <input type="hidden" name="id" value="{{image.id}}"> 
+                                            <input type="hidden" name="url" value="/dashboard/car/add/{{id}}"> 
+                                            <button type="submit"  class="btn btn-small btn-primary pull-right"><i class="fa fa-trash"></i> Delete Image</button> 
+                                    </form> 
+                            </div>
+                
+                    </div>
+                </div>
+            </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+  
+    </div>
+        <div class="modal fade" id="UploadImage" tabindex="-1" role="dialog" aria-labelledby="UploadImageLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="UploadImageLabel"><b>Upload image</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">      	
+                            <div class="upload-list-image"> 
+
+                    <img class="list-image" style="width:100%" alt="Image Preview will show here" src="">
+                    <br><br>
+                                <form  method="POST" action='{{path('upload_image')}}' enctype="multipart/form-data" >
+                                        <input type="file" name="file" id="listfile" class="filestyle">
+                                        <input type="hidden" name="type" value="car">  
+                                        <input type="hidden" name="id" value="{{id}}"> 
+                                        <input type="hidden" name="owner" value="{{owner}}"> 
+                                        <input type="hidden" name="url" value="/dashboard/car/add/{{id}}"> 
+                                        <button type="submit"  class="btn btn-primary pull-right"><i class="fa fa-save"></i> Upload Image</button> 
+                                </form>                                                 
+                            </div>
+            </div>
+            
+            </div>
+        </div>
+</div>
+</div>
+{% endif %} 
+{{ form_start(form) }}
+  <div class="row">
+  <div class="col-md-12">
+      {{ form_row(form.name) }}
+  </div>
+      <div class="col-md-12">
+          {{ form_row(form.description) }}
+      </div>
+      <div class="col-md-6">
+          {{ form_row(form.ratePerDay) }}
+      </div>
+      <div class="col-md-6">
+          {{ form_row(form.refundableDeposit) }}
+      </div>      
+      <div class="col-md-4">
+          {{ form_row(form.seat_number) }}
+      </div>
+      <div class="col-md-4">
+          {{ form_row(form.bag_number) }}
+      </div>
+      <div class="col-md-4">
+          {{ form_row(form.door_number) }}
+      </div>
+      <div class="col-md-4">
+          {{ form_row(form.transmission) }}
+      </div>
+      <div class="col-md-4">
+          {{ form_row(form.fuel) }}
+      </div>
+      <div class="col-md-4">
+          {{ form_row(form.brand) }}
+      </div>
+      <div class="col-md-3">
+          {{ form_row(form.aircon) }}
+      </div>
+      <div class="col-md-3">
+          {{ form_row(form.leatherUpholstery) }}
+      </div>
+      <div class="col-md-3">
+          {{ form_row(form.gps) }}
+      </div>
+      <div class="col-md-3">
+          {{ form_row(form.active) }}
+      </div>
+      
+      <div class="col-md-12">
+          {{ form_row(form.update) }}
+      </div>
+  </div>
+{{ form_end(form) }}
+
+
+
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}   
+<style>
+
+</style>
+<div class="col-md-4 account-setup-section" >
+  <h4><b>Account Set Up</b></h4>
+    {{ form_start(form) }}    
+    <div class="panel">  <br>    
+        <div class="col-md-12">
+       {{ form_row(form.notifications) }}
+        </div>    
+        <div class="col-md-12">
+       {{ form_row(form.sms)}}
+        </div>   
+        <div class="col-md-12">
+        {{ form_row(form.email)}}
+        </div>  
+        <div class="col-md-12">
+        {{ form_row(form.account)}}
+        </div>
+    </div>
+    <br>
+    <p class="text-danger"><b>Notice :</b> Settings can be modified in settings tab</p>
+    {{ form_end(form) }}
+{% endblock %}

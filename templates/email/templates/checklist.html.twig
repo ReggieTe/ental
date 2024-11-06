@@ -1,0 +1,11 @@
+{% extends 'email/base.html.twig' %}
+
+{% block body %}  
+    Hi {{user.fullname}}<br><br>
+    <h3>Invoice #{{invoice.id}}</h3>
+     The proof of payment you submitted has been approved .Check account for update <br>
+     <br><br><b>{{site.name}} Dream Team</b>  
+{% endblock body %}                                             
+
+
+													

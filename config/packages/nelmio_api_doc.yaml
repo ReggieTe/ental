@@ -1,0 +1,26 @@
+# config/packages/nelmio_api_doc.yaml
+nelmio_api_doc:
+    documentation:
+        # servers:
+        #   - url: http://api.example.com/unsafe
+        #     description: API over HTTP
+        #   - url: https://api.example.com/secured
+        #     description: API over HTTPS
+        info:
+            title: Ental
+            description: Api for Ental
+            version: 1.0.0
+            x-build: #CommitHash
+        # components:
+        #     securitySchemes:
+        #         Bearer:
+        #             type: http
+        #             scheme: bearer
+        #             bearerFormat: JWT
+        # security:
+        #     - Bearer: []
+    areas:
+        path_patterns: # an array of regexps (document only routes under /api, except /api/doc)
+            - ^/api(?!/doc$)
+        # host_patterns: # document only routes with a host of the form api.*
+        #     - ^api\.

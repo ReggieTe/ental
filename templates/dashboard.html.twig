@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="section-container">
+			<div class="container">
+         <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <small><b>App is in Beta testing </b>- This is an opportunity for you to use the product in a production environment so that you help us to improve the product before launch. </small>
+               
+            </div>
+				<ul class="breadcrumb mb-3">
+            <li class="breadcrumb-item"><a class="pull-right" onclick="history.back()"><span class="fa fa-chevron-left"></span> Back</a></li>
+					<li class="breadcrumb-item"><a href="#">Home</a></li>
+					<li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+               {% if title is defined %}
+					<li class="breadcrumb-item active">{{title}}</li>  
+                {% endif %}
+				</ul>
+            {% if permissions.inprogressRental %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <div class="row"> <div class="col-md-10 col-sm-6"> Continue with your car rental booking.</div>
+         <div class="col-md-2 col-sm-6">                 
+               <span class=""><a href="/home"><b>Continue </b></a> | <a href="/dashboard/discard/rental" class="text-danger"><b>Discard</b></a> </span></div></div>
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+            {% endif %}
+
+
+         {% for message in app.flashes('notice') %}
+         <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ message }}
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+         {% endfor %}
+                  {% for message in app.flashes('warning') %}
+         <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ message }}
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+         {% endfor %}
+         {% for message in app.flashes('success') %}
+         <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+         {% endfor %}
+                  {% for message in app.flashes('danger') %}
+         <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ message }}
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+         {% endfor %}
+
+			<div class="account-container">           
+         <div class="account-sidebar" >                                             
+                        <div class="list-group" >
+                           {% if permissions.rentee %}          
+                           <a class="list-group-item" href="/dashboard">
+                              <i class="fa fa-fw fa-list text-warning"></i> Dashboard
+                           </a> 
+                              {% endif %}
+                              <a class="list-group-item" href="/home">
+                                 <i class="fa fa-fw fa-dashboard text-info"></i> Rent now
+                              </a> 
+                              <a class="list-group-item" href="/dashboard/rentals">
+                                 <i class="fa fa-fw fa-car text-info"></i> Rentals
+                              </a>
+                                        
+                              <a class="list-group-item" href="/dashboard/documents">
+                                 <i class="fa fa-fw fa-file-pdf text-info"></i> Documents
+                              </a> 
+                              <a class="list-group-item" href="/dashboard/profile">
+                                 <i class="fa fa-fw fa-user-circle-o text-info"></i> Profile
+                              </a> 
+                                   
+                              <a class="list-group-item" href="/dashboard/setting">
+                                 <i class="fa fa-fw fa-cogs text-info"></i> Settings
+                              </a>
+                              <a class="list-group-item" href="/logout">
+                                 <i class="fa fa-fw fa-sign-out text-warning"></i> Log out
+                              </a>
+                              <a class="list-group-item text-danger" href="/dashboard/close">
+                                 <i class="fa fa-trash  text-danger"></i>  Delete Account
+                              </a>
+                                 
+                              <br>
+                           <br>               
+                           </div>                           
+               </div>
+    
+            <div class="account-body">
+						<div class="row">
+                  <div class="col-md-12">                     
+               <div class="widget-header"> 
+                  <div class="row">
+               <div class="col-md-12">
+               {% if title is defined %}
+               <div class="form-title">{{title}}</div>
+               {% endif %}
+                    {% block form %}{% endblock %}                       
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      <style>
+       
+
+</style>
+{% endblock %}

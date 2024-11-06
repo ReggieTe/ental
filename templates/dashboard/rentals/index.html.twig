@@ -1,0 +1,318 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block form %}
+<div class="title-header" style="">
+         <div class="rentals">         
+        {% if list is defined %}
+        {% if list|length > 0 %}
+        <h2 class="fs-title">Active ({{list|length}})</h2>
+        <ul>
+            {% for rental in list %}
+              <li>  
+                <div class ="col-md-12 rental-item" >  
+                    <div class="row">
+                        <div class="col-md-8">
+              <h4><b>#{{rental.id}}</b> </h4>
+              
+                             <span class="name">Pick Up Location<br>  <b>{{rental.location}}</b></span>
+                        <br>
+                        <span class="name">Drop Off Location<br>  <b>{{rental.dlocation}}</b></span>
+                            <br>
+                    Period <br>  <b><span class="name" title="Pick up date"> {{rental.pickupdate}}</span> to <span class="name" title="Drop off date" > {{rental.dropoffdate}} </b>
+                
+                <br><small>Payment Status : {{rental.paymentStatus}}<br> Status : {{rental.status}}</small><br>
+                <a href="#" class="text-warning" title="Veiw rental.car details" data-toggle="modal" data-target="#{{rental.car.id}}"><span class="fa fa-car"></span> <b> Car details</b></a><br>
+                
+                </div>
+                <br>                        
+                <div class="col-md-4">   <span class="options pull-right">
+                    <span class="amount"><strong><a href="#"  data-toggle="modal" data-target="#amount{{rental.car.id}}">{{site.currency}}  {{rental.amount}}</a></strong></span><br>
+                     
+                    {% if rental.completePayment %} <span class="complete-payment"><a href="#" data-toggle="modal" data-target="#payment{{rental.car.id}}"><b>Complete payment</b></a></span><br>{% endif %}                    
+                    
+                    {% if rental.completePayment %} 
+                    <span class="delete-rental"><a href="/dashboard/rental/delete/{{rental.id}}" class="text-danger" title="Delete rental"><b><span class="fa fa-trash-o"></span> Delete </a></span> |</b>
+                     {% endif %}                    
+                    
+                    {% if rental.downloadPayment !="" %}
+                        <a href="{{rental.downloadPayment}}" target="_blank" title="Click to Download file"><b>Payment (POP)</b></a>
+            {# {% if done is same as(false) %} #}
+                {% if rental.approved is same as(false) %} 
+                   |  <span class="complete-payment"><a href="#" class="text-danger"  data-toggle="modal" data-target="#payment{{rental.car.id}}"><b>Replace</b></a></span>
+                {% endif %}
+             {% endif %} 
+             
+             {% if rental.approved %} 
+            <br><b class="text-success" >Payment Approved</b>
+            {% else %}
+             {% if permissions.rentee %}<br>
+                <a href="/dashboard/rental/reject/payment/{{rental.id}}" class="text-danger" ><b><span class="fa fa-times"></span>  Reject</b></a> | 
+                <a href="/dashboard/rental/approve/payment/{{rental.id}}" class="text-success"  ><b><span class="fa fa-check"></span>  Approve</b></a> 
+                {% else %}
+                <b class="text-warning" >Pending Approval</b>
+            {% endif %}
+            {% endif %}
+                    </span>
+                    </div>                    
+                    </div>
+                    <div class="col-md-12">
+                            <span class=""><a href="/dashboard/rental/download/{{rental.id}}"><b> <span class="fa fa-download"></span>  Download Invoice</b></a></span>
+                            <span class="pull-right text-success"><a href="/dashboard/rental/view/{{rental.id}}" title="View rental"><b><span class="fa fa-eye"></span> View </a></span></b><br>
+                            <small class="pull-right">Date Created : {{rental.dateCreated}}</small><br>
+                    </div> 
+
+                    <div class="modal fade" id="amount{{rental.car.id}}" tabindex="-1" role="dialog" aria-labelledby="UploadImageLabel" aria-hidden="true">
+                    <div class="modal-dialog  modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="UploadImageLabel"><strong class="name">Total breakdown</strong></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        Days booked  <b class="pull-right">{{rental.breakdown.daysBooked}}</b><br>
+                                        Rate/day  <b class="pull-right">{{site.currency}}  {{rental.breakdown.rate}}</b><br><hr>
+                                        Total before Deposit <b class="pull-right">{{site.currency}}  {{rental.breakdown.beforeDeposit}}</b><br>
+                                        Deposit  <b class="pull-right">{{site.currency}}  {{rental.breakdown.deposit}}</b>
+                                        
+                                        <br>
+                                            {% if rental.breakdown.additionItems|length > 0 %}
+                                        <b class="text-primary">Additionals ({{rental.breakdown.additionItems|length}})</b><br>
+                                            {% for issue in rental.breakdown.additionItems %}
+                                                    {{issue.description}} <span class="pull-right"> <b>{{site.currency}} {{issue.amount}}</b></span><br>
+                                                {% endfor %}
+                                                <br
+                                            {% endif %}>
+
+                                                    {% if rental.levy|length > 0 %}
+                                                      <b class="text-primary">Levies ({{rental.levy|length}})</b><br>
+                                                       {% for item in rental.levy %}
+                                                            {{item.name}} <span class="pull-right"> <b> {{site.currency}} {{item.total}}</b></span><br>
+                                                            <small>{{item.description}} </small>
+                                                              <br>
+                                                        {% endfor %}
+                                                        <br>
+                                                    {% endif %}
+                                                        {% if rental.discount|length > 0 %}
+                                                        <b class="text-primary">Discounts ({{rental.discount|length}})</b><br>
+                                                            {% for item in rental.discount %}
+                                                        {{item.name}} <span class="pull-right"> <b> {{site.currency}} {{item.total}}</b></span><br>
+                                                        <small>{{item.description}} </small>
+                                                                {% endfor %}
+                                                            {% endif %}
+
+
+                                            <hr><span>Grand Total  <b class="pull-right">{{site.currency}}  {{rental.amount}}</b></span>                                     
+                                    </div>                                       
+                                </div>                                       
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+        <div class="modal fade" id="{{rental.car.id}}" tabindex="-1" role="dialog" aria-labelledby="UploadImageLabel" aria-hidden="true">
+            <div class="modal-dialog  modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="UploadImageLabel"><strong class="name">{{rental.car.name}}</strong></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">   
+                            <div class="row">
+                                <div class="col-md-12"> 
+                                <div id="o{{rental.car.id}}" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+                                  {% for key,image in rental.car.images %}
+
+                                  {% if key == 0%}
+                                  <div class="carousel-item active">
+                                  {% else %}
+                                  <div class="carousel-item">
+                                {% endif %}
+                                  <img class="image responsive-image img-rounded" data-small="{{image.file}}" 
+                                  data-small-retina="{{image.file}}" data-large="{{image.file}}"
+                                 data-large-retina="{{image.file}}" src="{{image.file}}" alt="{{rental.car.description}}">
+                                </div>
+                                {% endfor %}
+                                </div>
+                                {% if rental.car.images|length != 1%}
+                                <a class="carousel-control-prev" href="#o{{rental.car.id}}" role="button" data-slide="prev">
+                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                  <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#o{{rental.car.id}}" role="button" data-slide="next">
+                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                  <span class="sr-only">Next</span>
+                                </a>
+                               {% endif %}
+                              </div> 
+                            </div>
+                                	
+                                <div class="col-md-12 vehicle">	
+                                    {% if rental.car.description is defined %}{% if rental.car.description is not empty%}<p class="description"><br>{{rental.car.description}}</p>{% endif %}{% endif %}
+                                        <div class="row">
+                                            {% if rental.car.seats is defined %}<div class="col-md-4"><div class="option"><span class="fa fa-rental.car"></span> {{rental.car.seats}} Seats</div></div>{% endif %}
+                                            {% if rental.car.bags is defined %}<div class="col-md-4"><div class="option"><span class="fa fa-rental.car"></span> {{rental.car.bags}} Bags</div></div>{% endif %}
+                                            {% if rental.car.doors is defined %}<div class="col-md-4"><div class="option"><span class="fa fa-rental.car"></span> {{rental.car.doors}} Doors</div></div>{% endif %}
+                                            {% if rental.car.transmission is defined %} <div class="col-md-4"><div class="option"><span class="fa fa-check-square-o"></span> {{rental.car.transmission}}</div></div>{% endif %}
+                                            {% if rental.car.fuel is defined %}{% if rental.car.fuel %}<div class="col-md-4"><div class="option"><span class="fa fa-check-square-o"></span> {{rental.car.fuel}}</div></div>{% endif %}{% endif %}
+                                            {% if rental.car.aircon is defined %}{% if rental.car.aircon %}<div class="col-md-4"><div class="option"><span class="fa fa-check-square-o"></span> Air Con</div></div>{% endif %}{% endif %}
+                                            {% if rental.car.leatherUpholstery is defined %}{% if rental.car.leatherUpholstery %}<div class="col-md-4"><div class="option"><span class="fa fa-check-square-o"></span> Leather Upholstery</div></div>{% endif %}{% endif %}
+                                            {% if rental.car.gps is defined %}{% if rental.car.gps %}<div class="col-md-4"><div class="option"><span class="fa fa-check-square-o"></span> Built in GPS</div></div>{% endif %}{% endif %}
+                                        </div>                                                               
+                                    </div>                                                               
+                            </div>
+                        </div>
+                    <div class="modal-footer">
+                        <div class="col-md-12 rate">
+                        Refundable Deposit  <span  class="pull-right">
+                                <strong>{{site.currency}}  {% if rental.car.deposit is defined %}{{rental.car.deposit}}{% endif %}</strong>
+                                </span><br>
+                            Rate/day  <span  class="pull-right">
+                                <strong>{{site.currency}}  {% if rental.car.rate is defined %}{{rental.car.rate}}{% endif %}</strong>
+                                </span>
+                                {% if rental.car.owner.website is not empty%}                                                                                        
+                              <br>Provider <span class="pull-right"><a href="{{rental.car.owner.website}}" target="_blank"><b>{{rental.car.owner.fullname}}</b></a></span>
+                              {% endif %}
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+       
+        <!-- Modal -->
+        <div class="modal fade" id="payment{{rental.car.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle"><b>Payment methods</b></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+
+            {% if rental.paymentTye =="CASH" %}
+            <h2 class="fs-title">Cash payment</h2>
+            <p>Cash must be paid on collection of the vehicle</p>
+            {% endif %}
+
+            {% if rental.paymentTye =="Payfast" %}
+            <h2 class="fs-title">Payfast</h2>
+            {% if rental.payfast.merchantId is defined %}
+            {% if rental.payfast.merchantKey is defined %}
+            <form action="https://www.payfast.co.za/eng/process" method="post">
+                <input type="hidden" name="merchant_id" value="{{rental.payfast.merchantId}}">
+                <input type="hidden" name="merchant_key" value="{{rental.payfast.merchantKey}}">
+                <input type="hidden" name="amount" value="{{rental.amount}}">
+                <input type="hidden" name="item_name" value="{{site.name}} Car rental - {{rental.car.name}}">
+                <strong>{{site.currency}}  {{rental.amount}}</strong>
+                <button type="submit" class="btn btn-primary btn-sm pull-right"> Continue to payfast</button>
+            </form><br><br>
+            <hr>
+            {% endif %}
+            {% endif %}
+            {% endif %}            
+            {% if rental.paymentTye =="EFT" %}
+            <h2 class="fs-title">Eft</h2>
+                <b class="text-success">Bank Account(s)</b>
+                    {% for key,item in rental.bank %}
+                <br><b class="text-warning">Account</b>
+                <small>  <table class="table">
+                    <tr><td>Account Holder/Name</td>
+                    <td><b>{{item.holder}}</b></td></tr>
+                    <tr><td>Account Bank</td><td><b>{{item.bank}}</b></td></tr>
+                    <tr><td>Account Number</td><td><b>{{item.account}}</b></td></tr>
+                    <tr><td>Account Type</td><td><b>{{item.type}}</b></td></tr>
+                    <tr><td>Account Branch</td><td><b>{{item.code}}</b></td></tr>
+                    </table>
+                </small>             
+            {% endfor %}
+             <strong>Upload the proof of payment (POP) pdf</strong><br><br>
+            <form  method="POST" action='{{path('uploadEft')}}' enctype="multipart/form-data" >
+                <input type="file" name="file" id="listfile" class="filestyle">
+                <input type="hidden" name="id" value="{{rental.id}}"> 
+                <button type="submit"  class="btn btn-small btn-primary pull-right"><i class="fa fa-trash"></i> Upload eft file</button> 
+            </form> <br><br>
+            <hr>
+            {% endif %}            
+            {% if rental.paymentTye =="Paypal" %}            
+                    {% if rental.paypal.merchantEmail is defined %}
+                    <h2 class="fs-title">Paypal</h2>
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                    <strong>{{site.currency}}  {{rental.amount}}</strong>
+                    <input type="hidden" name="cmd" value="_cart"> 
+                    <input type="hidden" name="business" value="{{rental.paypal.merchantEmail}}">
+                    <input type="hidden" name="item_name" value="{{site.name}} Car rental - {{rental.car.name}}">
+                    <input type="hidden" name="item_number" value="1">
+                    <input type="hidden" name="amount" value="{{rental.amount}}"> 
+                    <input type="hidden" name="first_name" value="{{rental.client.fullname}}">
+                    <input type="hidden" name="address1" value="{{rental.client.address}}">
+                    <input type="hidden" name="email" value="{{rental.client.email}}"> 
+                    <input type="image" name="submit" class="pull-right" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" alt="PayPal - The safer, easier way to pay online">
+                </form>
+               {% endif %} 
+            {% endif %} 
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+            </div>
+        </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endif %}
+        
+        {% if history|length > 0 %}
+    <h3><b>History ({{history|length}})</b></h3>
+        <table class="table table-striped table-td-valign-middle">
+        <thead>
+            <tr>
+                <th class="text-nowrap">Location</th>
+                <th class="text-nowrap">Status</th>
+                <th class="text-nowrap">Active</th>
+                <th class="text-nowrap"><span class="fa fa-cogs text-success"></span></th>
+            </tr>
+        </thead>
+        <tbody>
+                {% for item in history %} 
+                <tr  class="" >
+                    <td><a href="/dashboard/rental/view/{{item.id}}" >{{item.location|length > 30 ? item.location|slice(0,30) ~ '...' : item.location}}</a></td>
+                    <td>{{item.status}}</td>
+                    <td>{{site.currency}}  {{item.amount}}</td>											
+                    <td>											
+                    <a href="/dashboard/car/delete/{{item.id}}" ><span class="fa fa-trash text-success"></span></a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+      </table>
+      
+        {% endif %}
+        {% if history|length is same as(0) %}
+            {% if list|length is same as(0) %}
+            <div class="row justify-content-center">
+            <div class="col-sm-12 col-md-4 col-lg-4 text-center">
+            <br><br><br>
+            <span class="fa fa-car fa-3x"></span> <br>
+            <b>Start booking now so that your enjoy our best deals</b><br>
+            <b><a href="/home">Book Now</a>
+            </div>
+        </div>
+
+            {% endif %}
+        {% endif %}
+    </div>
+</div>     
+        
+
+{% endblock %}

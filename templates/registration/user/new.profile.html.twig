@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reset Password{% endblock %}
+
+{% block body %}
+<div class="col-md-3"></div>
+<div class="col-md-3 login-section" >
+<div class="login-form" >
+  <h1 class="h3 mb-3 font-weight-normal"><b>Set New Password</b></h1>
+  <form method="POST">    
+        {{ form_start(form) }}
+            {{ form_row(form.password)}}
+            {{ form_row(form.conpassword)}}
+        {{ form_end(form) }}
+   </form>
+</div>
+{% endblock %}

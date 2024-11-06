@@ -1,0 +1,186 @@
+{% extends 'email/base.html.twig' %}
+
+{% block body %}                                 
+<div style="font-family: 'Quicksand', sans-serif;height: 50px;background:#ff8582;color:#fff;padding: 20px;">
+                                                        <h1>Invoice</h1></div>
+                                                        <div style="font-family: 'Quicksand', sans-serif;background:#fafafa;padding:10px;">
+                                                       {% if statement.user is defined %}                                             
+                                                                <h3  style="font-family: 'Quicksand', sans-serif;">Details</h3> 
+                                                            <table   style="font-family: 'Quicksand', sans-serif;width:100%;" >
+                                                                {% if statement.user.fullname is defined %}{% if statement.user.fullname is not empty %}
+                                                                <tr>
+                                                                    <td>Fullname</td><td align="right"><b>{{statement.user.fullname}}</b></td>
+                                                                </tr>
+                                                                {% endif %}{% endif %}
+                                                                {% if statement.user.email is defined %}{% if statement.user.email is not empty %}
+                                                                <tr>
+                                                                    <td>Email</td><td align="right"><b>{{statement.user.email}}</b></td>
+                                                                </tr>
+                                                                {% endif %}{% endif %}
+                                                                {% if statement.user.phone is defined %}{% if statement.user.phone is not empty %}
+                                                                <tr>
+                                                                    <td>Phone</td><td align="right"><b>{{statement.user.phone}}</b></td>
+                                                                </tr>
+                                                                {% endif %}{% endif %}
+                                                                {% if statement.user.address is defined %}{% if statement.user.address is not empty %}
+                                                                <tr>
+                                                                    <td>Address</td><td align="right"><b>{{statement.user.address}}</b></td>
+                                                                </tr>
+                                                                {% endif %}{% endif %}
+                                                            </table>
+                                                            
+                                                        {% endif %}
+                                                                                    
+                                                                {% if statement.documents is defined %}
+                                                                    <div class="col-md-12">
+                                                                        <h3  style="font-family: 'Quicksand', sans-serif;">Documents</h3>  
+                                                                           <small> (Check attachments)</small>                 
+                                                                            <ul>
+                                                                            {% for image in statement.documents %}
+                                                                                <li> 
+                                                                                    {{image.type}}
+                                                                                </li>
+                                                                            {% endfor %}
+                                                                            </ul>                                 
+                                                                {% endif %}
+                                                                {% if statement.car is defined%}
+                                                                    <h3  style="font-family: 'Quicksand', sans-serif;">Vehicle</h3> 
+                                                                    <table   style="font-family: 'Quicksand', sans-serif;width:100%;" >
+                                                                        <tr>
+                                                                            <td>Car</td><td align="right"><b>{{statement.car.name}}</b></td>
+                                                                        </tr>
+                                                                        {% if statement.car.description is defined %}
+                                                                        <tr>
+                                                                            <td>
+                                                                                <p class="description">{{statement.car.description}}</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                    {% endif %} 
+                                                                    </table>
+                                                            {% endif %}                                                    
+                                                            {% if statement.rental is defined%}
+                                                                    <h3  style="font-family: 'Quicksand', sans-serif;">Rental</h3> 
+                                                                    <table   style="font-family: 'Quicksand', sans-serif;width:100%;" >                                                    
+                                                                    {% if statement.rental.location is defined%}
+                                                                        <tr>
+                                                                            <td>Location</td><td align="right"><b>{{statement.rental.location}}</b></td>
+                                                                        </tr>
+                                                                    {% endif %}                                                     
+                                                                        {% if statement.rental.pickupdate is defined%}
+                                                                        <tr>
+                                                                            <td>Pick up date </td><td align="right"><b>{{statement.rental.pickupdate}}</b></td>
+                                                                        </tr> 
+                                                                    {% endif %}                                                    
+                                                                        {% if statement.rental.dropoffdate is defined%}
+                                                                        <tr>
+                                                                            <td>Drop off date </td><td align="right"><b>{{statement.rental.dropoffdate}}</b></td>
+                                                                        </tr>
+                                                                    {% endif %} 
+                                                                    </table>
+                                                            {% endif %} 
+                                        
+
+                                                            <table   style="font-family: 'Quicksand', sans-serif;width:100%;" >
+                                                                <tr>
+                                                                    <td><h3>Total</h3></td><td align="right"><small class="pull-right">{{statement.daysTillBookedDate}}  day(s) to booking </small></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Day(s) booked</td><td align="right"><b>{{statement.daysBooked}}</b></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Rate/day</td><td align="right"><b>{{site.currency}} {{statement.car.rate}}</b></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Refundable deposit</td><td align="right"><b>{{site.currency}} {{statement.car.deposit}}</b></td>
+                                                                </tr>
+                                                            </table>
+                                                            {% if statement.additionItems is defined%} 
+                                                            {% if statement.additionItems|length >0 %}
+                                                                <table   style="font-family: 'Quicksand', sans-serif;width:100%;" >
+                                                                    <tr>
+                                                                        <td><b style="font-family: 'Quicksand', sans-serif;color:#00acac">Additionals</b></td><td align="right"></td>
+                                                                    </tr>
+                                                                        {% for item in statement.additionItems %}
+                                                                        <tr>
+                                                                            <td>{{item.description}} </td><td align="right"><b>{{site.currency}} {{item.amount}}</b></td>
+                                                                        </tr>
+                                                                            {% endfor %}                                                                        
+                                                                </table>                                                                        
+                                                                    {% endif %}
+                                                               {% endif %}
+        
+                                                               {% if statement.discount is defined%} 
+                                                                   {% if statement.discount|length >0 %}
+                                                                     <b style="font-family: 'Quicksand', sans-serif;width:100%;">Discounts Applied</b><br>
+                                                                        <table   style="font-family: 'Quicksand', sans-serif;width:100%;" >
+                                                                       {% for item in statement.discount %}
+                                                                            <tr>
+                                                                                <td>{{item.name}} <small>- {{item.display}}%</small></td><td align="right"> <span class="pull-right"><b>{{site.currency}} {{item.total}}</b> </span><br></span></td>
+                                                                            </tr> 
+                                                                        {% endfor %}                                                                    
+                                                                        </table>
+                                                                    {% endif %}
+                                                                {% endif %}
+                                                              
+                                                           
+                                                            {% if statement.totalBookingFee is defined%} 
+                                                            <hr style="color:#999999">
+                                                                <table   style="font-family: 'Quicksand', sans-serif;width:100%;" >
+                                                                    <tr>
+                                                                        <td><b style="font-family: 'Quicksand', sans-serif;color:#00acac">Total due</b></td><td align="right"><b>{{site.currency}} {{statement.totalBookingFee}}</b></td>
+                                                                    </tr>                                                                    
+                                                                </table>
+                                                                <hr style="color:#999999">                                                            
+                                                            {% endif %}
+
+
+
+                                                            {% if statement.levy is defined%} 
+                                                                {% if statement.levy|length >0 %}
+                                                                    <b   style="font-family: 'Quicksand', sans-serif;width:100%;">Levies Applied</b><br>
+                                                                    <table   style="font-family: 'Quicksand', sans-serif;width:100%;" >
+                                                                        {% for item in statement.levy %}
+                                                                        <tr>
+                                                                            <td>{{item.name}} <small>{{item.amount}}%</small> </td><td align="right"><b>{{site.currency}} {{item.total}}</b></td>
+                                                                        </tr>
+                                                                        {% endfor %}                                                                    
+                                                                    </table>
+                                                                    <hr style="color:#999999">
+                                                                {% endif %}
+                                                            {% endif %}
+
+
+
+                
+                                                        {% if statement.restrictions is defined%} 
+                                                            {% if statement.restrictions|length >0 %}
+
+                                                            <table   style="font-family: 'Quicksand', sans-serif;width:100%;" >
+                                                                <tr>
+                                                                    <td><b style="font-family: 'Quicksand', sans-serif;color:#ff8582">Restrictions</b></td><td align="right"></td>
+                                                                </tr>
+                                                                    {% for item in statement.restrictions %}
+                                                                        {% if item.state %}
+                                                                            <tr>
+                                                                                <td>{{item.description}}</td>
+                                                                            </tr>                                                                       
+                                                                        {% endif %}                                            
+                                                                {% endfor %}                                                                      
+                                                            </table>
+                                                        {% endif %}  
+                                                    {% endif %} 
+                                                    <br>
+                                                    <br>
+                                                    {% if statement.rental.pickupdate is defined%}
+                                                    <table>                                                        
+                                                                        <tr>
+                                                                            <td>Pay invoice before</td><td align="right"><b  style="font-family: 'Quicksand', sans-serif;color:#ff8582;">{{statement.rental.pickupdate}}</b></td>
+                                                                        </tr>
+                                                    </table>
+                                                {% endif %}
+                                                <span style="font-family:'Quicksand', sans-serif;color:#00acac;">Pay now to gurantee you get the vehicle </span><br><small>Upload the Proof of Payment(POP) on your account under Dashboard/Rentals</small>
+                                                </div>
+                                                
+
+                                            {% endblock %}
+                                                               

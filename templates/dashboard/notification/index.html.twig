@@ -1,0 +1,34 @@
+  {% extends 'dashboard.html.twig' %}
+ {% block title %}List{% endblock %}
+ {% block form %}               
+<b><span class="fa fa-envelope-o text-primary"></span> Inbox ({{notifications|length}})</b><br><br>           
+                  <table class="table table-design"  id="notifications">
+                           <tbody>
+                           {% for item in notifications %}                             
+                              <tr>
+                                 <td style="width:60%">                                                           
+                                    <b><a  href="/dashboard/notification/{{item.id}}"> {{item.head}}</a></b> 
+                                    <br>
+                                    <span class="pull-left"> 
+                                       <a href="/dashboard/notification/delete/{{item.id}}">                            
+                                         <b> Delete  <i class="fa fa-trash text text-danger"></i></b>
+                                    </span> 
+                                  </td>  
+                                  <td>  
+                                    <small><span class="pull-right">{{item.date}}</span> 
+                                    <br>  
+                                        {% if item.read  == 1 %}
+                                       {% else %}
+                                          <span class="pull-right"><span class="fa fa-bell text-warning"></span></span> 
+                                       {% endif %}
+                                       </small>
+                                    </td>
+                              </tr>
+                              {% endfor %}
+
+                           </tbody>
+                        </table>
+
+{% endblock %}
+     
+     

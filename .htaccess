@@ -1,0 +1,15 @@
+
+    Options -ExecCGI
+    RewriteEngine on
+    Options -Indexes
+
+    RewriteRule ^assets/(.*) public/build/$1
+    RewriteRule ^images/(.*) public/images/$1
+    RewriteRule ^build/(.*) public/build/$1
+    RewriteRule ^bundles/(.*) public/bundles/$1
+    # RewriteRule ^uploads/(.*)$ public/uploads/$1
+    # RewriteRule ^uploads/images/search/(.*)  public/uploads/images/search/$1
+    # RewriteRule ^uploads/images/icon/(.*) public/uploads/images/icon/$1
+    
+    RewriteCond %{REQUEST_FILENAME} !(images|assets|^uploads/*|bundles|build|search)
+    RewriteRule ^(.*)$ public/ [QSA,L]

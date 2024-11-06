@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="col-md-3"></div>
+<div class="col-md-3 login-section" >
+<div class="login-form" >
+  <h1 class="h3 mb-3 font-weight-normal"><b>Reset Password</b></h1>
+  <form method="POST"> 
+        {{ form_start(form) }}
+            {{ form_row(form.email)}}
+        {{ form_end(form) }}       
+    <br>
+    <p  class="text-center"><span>Already have an account ? <br><a href="/login"><b>Log in now</b></a></span></p>
+   </form>
+</div>
+{% endblock %}

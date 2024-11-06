@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}About Us{% endblock %}
+
+{% block body %}
+    <body class="nav-md">
+        <div class="container body" style="height:600px;">
+            <div class="main_container">
+                <div class="col-md-12">
+                    <div class="col-middle">
+                        <div class="text-center">
+                            <h1 class="error-number" style="margin-top:200px;">Not Allowed to view Requested page</h1>
+                            <h2>Your account doesn't have the neccessary permissions to view requested page</h2>                            
+                            <p><a href="<?php echo URL; ?>dashboard/home">Back To Home</a>
+                            </p>
+                       
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

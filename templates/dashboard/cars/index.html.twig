@@ -1,0 +1,31 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block form %} 
+					<h4> <small><a href="/dashboard/car/add" >Create New</a></small></h4>                    
+				         <table id="missing-persons" class="table table-striped table-td-valign-middle">
+								<thead>
+									<tr>
+										<th class="text-nowrap">Name</th>
+										<th class="text-nowrap">Booked</th>
+										<th class="text-nowrap">Active</th>
+										<th class="text-nowrap">Date</th>
+										<th class="text-nowrap">Action</th>
+									</tr>
+								</thead>
+								<tbody>
+										{% for item in list %} 
+										<tr  class="" >
+											<td><a href="/dashboard/car/add/{{item.id}}" >{{item.name|length > 15 ? item.name|slice(0, 15) ~ '...' : item.name}}</a></td>
+											<td>{% if item.booked %} Booked {% else %} Available {% endif %}</td>
+                                            <td>{% if item.active %} Active {% else %} Not Active {% endif %}</td>
+											<td>{{item.dateCreated |date('j F Y')}}</td>											
+											<td>											
+											<a href="/dashboard/car/delete/{{item.id}}" >Delete <span class="fa fa-trash text-success"></span></a></td>
+										</tr>
+										{% endfor %}
+										</tbody>
+				  			</table>                        							
+						</div>
+                  </div>
+      </section>
+{% endblock %}

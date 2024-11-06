@@ -1,0 +1,36 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block form %}
+        
+<div class="title-header" style="">
+Current items ({{list|length}})   
+        <a href="/dashboard/additional/add" class="pull-right" > Create new</a>
+        </div>
+        
+
+<div class="documents-list">
+{% if list is defined %}
+<ul>
+    {% for document in list %}
+    <li>
+        <a href="/dashboard/additional/add/{{document.id}}">
+            <div class ="col-md-12 document-item" >            
+                <div class="row">                
+                    <div class="col-md-12">                
+                        <h4><span class="name"><span class="fa fa-warning fa-2x"></span> {{document.description}}</span></h4> 
+
+                    </div>                    
+                    <div class="col-md-12">
+                     <b>Fee :  ZAR {{document.amount}}</b>
+                      <a href="/dashboard/additional/delete/{{document.id}}" class="pull-right"><span class="fa fa-trash-o"></span> Delete</a> 
+                     </div>
+                </div>
+            </div>
+        </a>
+</li>
+    {% endfor %}
+</ul>
+{% endif %}
+</div>
+
+{% endblock %}

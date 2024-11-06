@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reset Password{% endblock %}
+
+{% block body %}
+        <style>
+.login-form {
+
+   
+    border-radius:10px;
+    padding:15px;
+}
+.login-section{
+    margin-top : 10%;
+    margin-left : 40%;
+    margin-bottom : 10%;
+}
+</style>
+<div class="col-md-3"></div>
+<div class="col-md-3 login-section" >
+<div class="login-form" >
+  <h1>{{title}}</h1>
+  <h2><b>{{phone}}</b></h2>
+  <form method="POST" action='{{post}}'> 
+  <label for="inputOtp">Check {{type}} for for otp code</label><br>
+    <input type="text"  name="otp"  class="form-control" placeholder="Enter verification code" autocomplete="otp" required autofocus>  
+    <br> 
+   <button class="btn btn-lg btn-primary form-control" type="submit">Verify Now</button>
+    <br><br>
+    <p>Didn't get the code ? <a href="">Resend Code</a> </p> 
+   </form>
+</div>
+{% endblock %}

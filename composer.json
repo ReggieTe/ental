@@ -1,0 +1,127 @@
+{
+    "type": "project",
+    "license": "proprietary",
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=8.2",
+        "ext-ctype": "*",
+        "ext-gd": "*",
+        "ext-iconv": "*",
+        "aws/aws-sdk-php": "^3.312",
+        "composer/package-versions-deprecated": "1.11.99.4",
+        "doctrine/annotations": "^1.0",
+        "doctrine/doctrine-bundle": "^2.12",
+        "doctrine/doctrine-migrations-bundle": "^3.1",
+        "doctrine/orm": "^2.19",
+        "doctrineencryptbundle/doctrine-encrypt-bundle": "^5.4",
+        "dompdf/dompdf": "^2.0",
+        "dropbox/sign": "1.3.0",
+        "easycorp/easyadmin-bundle": "^4.9",
+        "elao/enum": "^2.4",
+        "google/cloud-storage": "^1.42",
+        "imagine/imagine": "^1.2",
+        "jms/serializer-bundle": "^5.0",
+        "knplabs/knp-snappy": "^1.4",
+        "knplabs/knp-snappy-bundle": "^1.9",
+        "league/oauth2-google": "^4.0",
+        "nelmio/api-doc-bundle": "^4.27",
+        "nelmio/cors-bundle": "^2.2",
+        "phpdocumentor/reflection-docblock": "^5.2",
+        "stof/doctrine-extensions-bundle": "^1.7",
+        "symfony/asset": "7.0.*",
+        "symfony/cache": "7.0.*",
+        "symfony/console": "7.0.*",
+        "symfony/dotenv": "7.0.*",
+        "symfony/event-dispatcher": "7.0.*",
+        "symfony/expression-language": "7.0.*",
+        "symfony/finder": "7.0.*",
+        "symfony/flex": "^1.3.1",
+        "symfony/form": "7.0.*",
+        "symfony/framework-bundle": "7.0.*",
+        "symfony/http-client": "7.0.*",
+        "symfony/intl": "7.0.*",
+        "symfony/lock": "7.0.*",
+        "symfony/mailer": "7.0.*",
+        "symfony/mime": "7.0.*",
+        "symfony/monolog-bundle": "^3.1",
+        "symfony/notifier": "7.0.*",
+        "symfony/process": "7.0.*",
+        "symfony/property-access": "7.0.*",
+        "symfony/property-info": "7.0.*",
+        "symfony/proxy-manager-bridge": "6.4.*",
+        "symfony/rate-limiter": "7.0.*",
+        "symfony/runtime": "7.0.*",
+        "symfony/security-bundle": "7.0.*",
+        "symfony/serializer": "7.0.*",
+        "symfony/string": "7.0.*",
+        "symfony/translation": "7.0.*",
+        "symfony/twig-bridge": "7.0.*",
+        "symfony/twig-bundle": "7.0.*",
+        "symfony/validator": "7.0.*",
+        "symfony/web-link": "7.0.*",
+        "symfony/webpack-encore-bundle": "^2.0",
+        "symfony/yaml": "7.0.*",
+        "twig/extra-bundle": "^2.12|^3.0",
+        "twig/twig": "^2.12|^3.0",
+        "twilio/sdk": "^6.33",
+        "wemersonjanuario/wkhtmltopdf-windows": "0.12.2.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "symfony/browser-kit": "7.0.*",
+        "symfony/css-selector": "7.0.*",
+        "symfony/debug-bundle": "7.0.*",
+        "symfony/maker-bundle": "^1.0",
+        "symfony/phpunit-bridge": "^5.3",
+        "symfony/stopwatch": "7.0.*",
+        "symfony/web-profiler-bundle": "7.0.*"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true,
+        "allow-plugins": {
+            "symfony/flex": true,
+            "symfony/runtime": true
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Tests\\": "tests/"
+        }
+    },
+    "replace": {
+        "symfony/polyfill-ctype": "*",
+        "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-php72": "*"
+    },
+    "scripts": {
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+        },
+        "post-install-cmd": [
+            "@auto-scripts"
+        ],
+        "post-update-cmd": [
+            "@auto-scripts"
+        ]
+    },
+    "conflict": {
+        "symfony/symfony": "*"
+    },
+    "extra": {
+        "symfony": {
+            "allow-contrib": false,
+            "require": "7.0.*"
+        }
+    }
+}

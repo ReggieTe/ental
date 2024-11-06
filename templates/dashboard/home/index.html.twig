@@ -1,0 +1,40 @@
+{% extends 'dashboard.html.twig' %}
+{% block title %}Welcome!{% endblock %}
+{% block form %} 
+
+<div class="dashboard">
+<div class="row">
+
+{% for item in items %}
+    <div class="col-md-12">
+    <a href="{{item.link}}">
+        <div class="body">            
+            <h2><b>{{item.title}}</b> <span class="pull-right"><b>{{item.count}}</b></span></h2>
+                {% for key,sub in item.subs %}
+                        {{key}} <b><span class="pull-right">{{sub}}</span></b><br>            
+                {% endfor %}
+        </div>
+    </a>
+    </div>
+{% endfor %}
+
+</div>
+</div>
+
+
+<style>
+
+.dashboard .body
+{
+  background: #f7f7f7;
+  padding: 10px;
+  border-bottom: 1px #c8c8c8 solid;
+}
+.dashboard .body .amount
+{
+    color:#fff;
+}
+</style>
+
+{% endblock %} 
+

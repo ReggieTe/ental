@@ -1,0 +1,19 @@
+  {% extends 'dashboard.html.twig' %}
+ {% block title %}List{% endblock %}
+ {% block form %}       
+			<div class="row">
+<a href="/dashboard/notifications"><b>Back to notifications</b></a><br>
+                <div class="col-md-12">  
+                  <small>{{notification.date}}</small>             
+                  <h4><b>{{notification.head}} </b></h4>
+                    <p>{{notification.body|raw}}</p>
+				</div>
+			</div>
+{% endblock %}
+
+     
+     
+                  
+               
+                     
+                   
