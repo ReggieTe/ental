@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1bedd8a1d94ce6ba6b51508f53ea42c3",
+    "content-hash": "97dc46d0dbccc925ff7c182e1ace47ba",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.325.2",
+            "version": "3.325.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "9e354a5e0cd1d563ec85245e3000e98e16a44fce"
+                "reference": "de0b289c7260fb19301ffa2eb724de2076daad74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/9e354a5e0cd1d563ec85245e3000e98e16a44fce",
-                "reference": "9e354a5e0cd1d563ec85245e3000e98e16a44fce",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/de0b289c7260fb19301ffa2eb724de2076daad74",
+                "reference": "de0b289c7260fb19301ffa2eb724de2076daad74",
                 "shasum": ""
             },
             "require": {
@@ -154,9 +154,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.325.2"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.325.3"
             },
-            "time": "2024-11-01T18:08:38+00:00"
+            "time": "2024-11-06T19:05:22+00:00"
         },
         {
             "name": "behat/transliterator",
@@ -1941,16 +1941,16 @@
         },
         {
             "name": "easycorp/easyadmin-bundle",
-            "version": "v4.14.1",
+            "version": "v4.14.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EasyCorp/EasyAdminBundle.git",
-                "reference": "bb5a3f60e7d3095b35365a41bcfd5b6a3a75eaf2"
+                "reference": "ba3900a9f2ff848085718780c1ac3efc8eadd549"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/bb5a3f60e7d3095b35365a41bcfd5b6a3a75eaf2",
-                "reference": "bb5a3f60e7d3095b35365a41bcfd5b6a3a75eaf2",
+                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/ba3900a9f2ff848085718780c1ac3efc8eadd549",
+                "reference": "ba3900a9f2ff848085718780c1ac3efc8eadd549",
                 "shasum": ""
             },
             "require": {
@@ -2024,7 +2024,7 @@
             ],
             "support": {
                 "issues": "https://github.com/EasyCorp/EasyAdminBundle/issues",
-                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v4.14.1"
+                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v4.14.3"
             },
             "funding": [
                 {
@@ -2032,7 +2032,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-11-04T19:37:33+00:00"
+            "time": "2024-11-07T07:08:21+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -2709,16 +2709,16 @@
         },
         {
             "name": "google/gax",
-            "version": "v1.34.1",
+            "version": "v1.35.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/gax-php.git",
-                "reference": "173f0a97323284f91fd453c4ed7ed8317ecf6cfa"
+                "reference": "21d038043e50498c42f8f060ab2d6949066480f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/gax-php/zipball/173f0a97323284f91fd453c4ed7ed8317ecf6cfa",
-                "reference": "173f0a97323284f91fd453c4ed7ed8317ecf6cfa",
+                "url": "https://api.github.com/repos/googleapis/gax-php/zipball/21d038043e50498c42f8f060ab2d6949066480f3",
+                "reference": "21d038043e50498c42f8f060ab2d6949066480f3",
                 "shasum": ""
             },
             "require": {
@@ -2760,9 +2760,9 @@
             ],
             "support": {
                 "issues": "https://github.com/googleapis/gax-php/issues",
-                "source": "https://github.com/googleapis/gax-php/tree/v1.34.1"
+                "source": "https://github.com/googleapis/gax-php/tree/v1.35.0"
             },
-            "time": "2024-08-15T18:00:58+00:00"
+            "time": "2024-11-06T20:27:21+00:00"
         },
         {
             "name": "google/grpc-gcp",
@@ -2811,16 +2811,16 @@
         },
         {
             "name": "google/longrunning",
-            "version": "0.4.3",
+            "version": "0.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/php-longrunning.git",
-                "reference": "ed718a735e407826c3332b7197a44602eb03e608"
+                "reference": "ce921cf2a59082b09ab04f36b1afef4686c3a9ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/php-longrunning/zipball/ed718a735e407826c3332b7197a44602eb03e608",
-                "reference": "ed718a735e407826c3332b7197a44602eb03e608",
+                "url": "https://api.github.com/repos/googleapis/php-longrunning/zipball/ce921cf2a59082b09ab04f36b1afef4686c3a9ab",
+                "reference": "ce921cf2a59082b09ab04f36b1afef4686c3a9ab",
                 "shasum": ""
             },
             "require-dev": {
@@ -2849,9 +2849,9 @@
             ],
             "description": "Google LongRunning Client for PHP",
             "support": {
-                "source": "https://github.com/googleapis/php-longrunning/tree/v0.4.3"
+                "source": "https://github.com/googleapis/php-longrunning/tree/v0.4.4"
             },
-            "time": "2024-06-01T03:14:01+00:00"
+            "time": "2024-11-06T21:50:43+00:00"
         },
         {
             "name": "google/protobuf",
@@ -4127,16 +4127,16 @@
         },
         {
             "name": "nelmio/api-doc-bundle",
-            "version": "v4.33.0",
+            "version": "v4.33.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-                "reference": "9ee5f586213fc77c9adc56bd59cc9229a9da2527"
+                "reference": "9d74fa9874b9f9b13b2fa4f6eb38082c2405c33b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/9ee5f586213fc77c9adc56bd59cc9229a9da2527",
-                "reference": "9ee5f586213fc77c9adc56bd59cc9229a9da2527",
+                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/9d74fa9874b9f9b13b2fa4f6eb38082c2405c33b",
+                "reference": "9d74fa9874b9f9b13b2fa4f6eb38082c2405c33b",
                 "shasum": ""
             },
             "require": {
@@ -4237,7 +4237,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nelmio/NelmioApiDocBundle/issues",
-                "source": "https://github.com/nelmio/NelmioApiDocBundle/tree/v4.33.0"
+                "source": "https://github.com/nelmio/NelmioApiDocBundle/tree/v4.33.2"
             },
             "funding": [
                 {
@@ -4245,7 +4245,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-10-31T12:10:57+00:00"
+            "time": "2024-11-07T09:50:16+00:00"
         },
         {
             "name": "nelmio/cors-bundle",
@@ -11359,16 +11359,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v3.14.0",
+            "version": "v3.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "126b2c97818dbff0cdf3fbfc881aedb3d40aae72"
+                "reference": "f405356d20fb43603bcadc8b09bfb676cb04a379"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/126b2c97818dbff0cdf3fbfc881aedb3d40aae72",
-                "reference": "126b2c97818dbff0cdf3fbfc881aedb3d40aae72",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/f405356d20fb43603bcadc8b09bfb676cb04a379",
+                "reference": "f405356d20fb43603bcadc8b09bfb676cb04a379",
                 "shasum": ""
             },
             "require": {
@@ -11422,7 +11422,7 @@
             ],
             "support": {
                 "issues": "https://github.com/twigphp/Twig/issues",
-                "source": "https://github.com/twigphp/Twig/tree/v3.14.0"
+                "source": "https://github.com/twigphp/Twig/tree/v3.14.1"
             },
             "funding": [
                 {
@@ -11434,7 +11434,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-09T17:55:12+00:00"
+            "time": "2024-11-06T18:17:38+00:00"
         },
         {
             "name": "twilio/sdk",
@@ -11546,61 +11546,6 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
-        },
-        {
-            "name": "wemersonjanuario/wkhtmltopdf-windows",
-            "version": "0.12.2.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/wemersonjanuario/wkhtmltopdf-windows.git",
-                "reference": "90fcd3487cad5931287742113c449b926e9e48d8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/wemersonjanuario/wkhtmltopdf-windows/zipball/90fcd3487cad5931287742113c449b926e9e48d8",
-                "reference": "90fcd3487cad5931287742113c449b926e9e48d8",
-                "shasum": ""
-            },
-            "suggest": {
-                "h4cc/wkhtmltopdf-amd64": "*",
-                "h4cc/wkhtmltopdf-i386": "*",
-                "wemersonjanuario/laravelpdf": "1.0.*"
-            },
-            "bin": [
-                "bin/32bit/wkhtmltopdf.exe",
-                "bin/32bit/wkhtmltoimage.exe",
-                "bin/64bit/wkhtmltopdf.exe",
-                "bin/64bit/wkhtmltoimage.exe"
-            ],
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL Version 3"
-            ],
-            "authors": [
-                {
-                    "name": "Wemerson Januario",
-                    "email": "wemerson.januario@gmail.com",
-                    "homepage": "http://wemersonjanuario.com.br"
-                }
-            ],
-            "description": "Convert html to pdf using webkit (qtwebkit). Static linked windows binary for 32 bit and 64 bit systems.",
-            "homepage": "http://wkhtmltopdf.org/",
-            "keywords": [
-                "binary",
-                "convert",
-                "htmltoimage",
-                "htmltopdf",
-                "pdf",
-                "snapshot",
-                "thumbnail",
-                "wkhtmltopdf"
-            ],
-            "support": {
-                "issues": "https://github.com/wemersonjanuario/wkhtmltopdf-windows/issues?state=open",
-                "source": "https://github.com/wemersonjanuario/wkhtmltopdf-windows/tree/master"
-            },
-            "time": "2015-06-30T20:19:22+00:00"
         },
         {
             "name": "zircote/swagger-php",
